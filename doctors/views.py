@@ -1,3 +1,8 @@
 from django.shortcuts import render
+from . import models
+from . import serializers
 
-# Create your views here.
+
+class DoctorViewset(viewsets.ModelViewSet):
+    quaryset = models.Doctor.objects.all()
+    serializer_class = serializers.DoctorSerializer
