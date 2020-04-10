@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
-class Doctors(models.Model):
+class Doctor(models.Model):
     class DoctorSpecialization(models.TextChoices):
         UROLOGIS = 'URO', _('Urologis')
         ORTHOPEDIST = 'ORT', _('Orthopedist')
