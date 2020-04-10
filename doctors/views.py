@@ -1,8 +1,9 @@
 from django.shortcuts import render
-from . import models
-from . import serializers
+from .models import Doctor
+from .serializers import DoctorSerializer
+from rest_framework import viewsets
 
 
-class DoctorViewset(viewsets.ModelViewSet):
-    quaryset = models.Doctor.objects.all()
-    serializer_class = serializers.DoctorSerializer
+class DoctorsViewSet(viewsets.ModelViewSet):
+    serializer_class = DoctorSerializer
+    queryset = Doctor.objects.all()
