@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
-class Medicines(models.Model):
+class Medicine(models.Model):
     class MedicineForm(models.TextChoices):
         TABLETS = 'TAB', _('Tablets')
         SYRUP = 'SYR', _('Surup')

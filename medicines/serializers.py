@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from .models import Medicines
+from .models import Medicine
 
 
-class MedicinesSerializer(serializers.ModelSerializer):
+class MedicineSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Medicines
+        model = Medicine
         fields = ('id', 'name', 'description', 'med_form', 'med_type')

@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .serializers import MedicinesSerializer
-from .models import Medicines
+from .serializers import MedicineSerializer
+from .models import Medicine
 
 
 class MedicinesView(viewsets.ModelViewSet):
-    serializer_class = MedicinesSerializer
-    queryset = Medicines.objects.all()
+    serializer_class = MedicineSerializer
+    queryset = Medicine.objects.all()

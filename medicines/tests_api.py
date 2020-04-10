@@ -1,5 +1,5 @@
 from rest_framework.test import APITestCase
-from .models import Medicines
+from .models import Medicine
 
 
 class MedicinesApiTest(APITestCase):
@@ -13,8 +13,8 @@ class MedicinesApiTest(APITestCase):
         data = {
             'name': 'New one',
             'description': 'This is the best pain killer',
-            'med_form': Medicines.MedicineForm.GLOBULES,
-            'med_type': Medicines.MedicineType.VITAMIN,
+            'med_form': Medicine.MedicineForm.GLOBULES,
+            'med_type': Medicine.MedicineType.VITAMIN,
         }
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, 201)
