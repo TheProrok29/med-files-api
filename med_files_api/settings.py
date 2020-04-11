@@ -60,10 +60,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'med_files_api.urls'
 
-CORS_ORIGIN_WHITELIST = (
-    'https://localhost:3000',
-    'https://localhost:8000'
-)
 
 TEMPLATES = [
     {
@@ -132,3 +128,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CORS_ORIGIN_WHITELIST = (
+    'https://localhost:3000',
+    'https://localhost:8000'
+)
+
+AUTH_USER_MODEL = 'accounts.Account'
