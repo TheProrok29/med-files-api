@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     # Local
-    'accounts',
+    'users',
     'medicines',
     'doctors',
 ]
@@ -134,4 +134,4 @@ CORS_ORIGIN_WHITELIST = (
     'https://localhost:8000'
 )
 
-AUTH_USER_MODEL = 'accounts.Account'
+AUTH_USER_MODEL = 'users.User'
