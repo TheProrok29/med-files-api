@@ -17,7 +17,7 @@ class UsersModelTest(TestCase):
 
     def test_new_user_email_normalized(self):
         """Test the email for a new iuser is normalized"""
-        email = 'testTT@vp.pl'
+        email = 'test@vdFDGp.pl'
         user = get_user_model().objects.create_user(email, 'pass123')
 
         self.assertEqual(user.email, email.lower())
