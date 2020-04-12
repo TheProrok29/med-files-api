@@ -2,7 +2,7 @@ from django.test import TestCase
 from medicines.models import Medicine
 
 
-class MedicinesModelCreateTest(TestCase):
+class MedicinesModelTest(TestCase):
 
     def test_medicine_creation(self):
         medicine = Medicine.objects.create(name='Gripex',
