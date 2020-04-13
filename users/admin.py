@@ -7,7 +7,7 @@ from .models import User
 class UserAdmin(BaseUserAdmin):
     """Override UserAdmin class to use CRUD methods related to own user model in django admin"""
     ordering = ['id']
-    list_display = ['name', 'email']
+    list_display = ['email', 'name', 'is_superuser']
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         (_('Personal Info'), {'fields': ('name',)}),
@@ -17,6 +17,13 @@ class UserAdmin(BaseUserAdmin):
         ),
         (_('Important dates'), {'fields': ('last_login',)})
     )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'password1', 'password2')
+        }),
+    )
+    search_fields = ('email',)
 
 
 admin.site.register(User, UserAdmin)
