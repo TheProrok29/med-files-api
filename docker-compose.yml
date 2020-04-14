@@ -13,7 +13,6 @@ services:
         networks:
             - backend
         environment:
-            DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
             POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
             POSTGRES_USER: ${POSTGRES_USER}
 
@@ -24,8 +23,6 @@ services:
             - "5432:5432"
         expose:
             - "5432"
-        volumes:
-            - ./postgresql_data:/var/lib/postgresql/data
         environment:
             POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
             POSTGRES_USER: ${POSTGRES_USER}
