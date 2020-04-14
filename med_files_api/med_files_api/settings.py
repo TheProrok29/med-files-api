@@ -21,6 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# SECRET_KEY = config('DJANGO_SECRET_KEY')
 SECRET_KEY = 'ipig5_w@8%!jw8is2_8^80gv-bqhc4p*ud+j_na6#@&wk0x285'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -84,24 +85,23 @@ WSGI_APPLICATION = 'med_files_api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
-POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD')
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': config('POSTGRES_PASSWORD'),
-        'HOST': '172.26.0.2',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'postgres',
+#         'USER': 'postgres',
+#         'PASSWORD': config('POSTGRES_PASSWORD'),
+#         'HOST': '172.19.0.2',
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Password validation

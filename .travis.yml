@@ -6,7 +6,7 @@ python:
 install:
   - "pip install -r requirements.txt"
 script:
-  - flake8 cmdbox
-  - coverage run med_files_api/manage.py test
+  - cd med_files_api && flake8 cmdbox
+  - coverage run manage.py test
 after_success:
   - codecov
