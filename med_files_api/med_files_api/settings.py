@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = config('DJANGO_SECRET_KEY')
-SECRET_KEY = 'ipig5_w@8%!jw8is2_8^80gv-bqhc4p*ud+j_na6#@&wk0x285'
+SECRET_KEY = config('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -85,20 +85,22 @@ WSGI_APPLICATION = 'med_files_api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+
+#                       SQLite
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
+#                       POSTGRESS
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
 #         'NAME': 'postgres',
-#         'USER': 'postgres',
+#         'USER': config('POSTGRES_USER'),
 #         'PASSWORD': config('POSTGRES_PASSWORD'),
-#         'HOST': '172.19.0.2',
+#         'HOST': config('DJANGO_DB_HOST', default='localhost'),
 #         'PORT': '5432',
 #     }
 # }
