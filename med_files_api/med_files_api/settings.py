@@ -85,7 +85,6 @@ WSGI_APPLICATION = 'med_files_api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-
 #                       SQLite
 DATABASES = {
     'default': {
