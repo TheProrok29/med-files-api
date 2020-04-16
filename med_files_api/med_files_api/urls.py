@@ -16,12 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from doctor import views as doctor_views
-from medicine import views as medicines_view
+from medicine import views as medicine_views
+from user import views as user_views
 from rest_framework import routers
 
 router = routers.DefaultRouter()
-router.register(r'medicine', medicines_view.MedicinesViewSet, 'medicine')
-router.register(r'doctor', doctor_views.DoctorsViewSet, 'doctor')
+router.register(r'medicine', medicine_views.MedicineViewSet, 'medicine')
+router.register(r'doctor', doctor_views.DoctorViewSet, 'doctor')
+router.register(r'user', user_views.CreateUserView, 'user')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
