@@ -1,5 +1,5 @@
-from rest_framework.test import APITestCase
 from medicines.models import Medicine
+from rest_framework.test import APITestCase
 
 
 class MedicinesApiTest(APITestCase):

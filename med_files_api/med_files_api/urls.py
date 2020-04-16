@@ -15,9 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework import routers
-from medicines import views as medicines_view
 from doctors import views as doctors_views
+from medicines import views as medicines_view
+from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'medicines', medicines_view.MedicinesViewSet, 'medicines')
