@@ -4,6 +4,6 @@ from .models import Medicine
 from .serializers import MedicineSerializer
 
 
-class MedicinesViewSet(viewsets.ModelViewSet):
+class MedicineViewSet(viewsets.ModelViewSet):
     serializer_class = MedicineSerializer
     queryset = Medicine.objects.all()
