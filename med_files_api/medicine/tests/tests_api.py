@@ -1,15 +1,15 @@
-from medicines.models import Medicine
+from medicine.models import Medicine
 from rest_framework.test import APITestCase
 
 
 class MedicinesApiTest(APITestCase):
     def test_medicines_get_method(self):
-        url = 'http://127.0.0.1:8000/api/medicines/'
+        url = 'http://127.0.0.1:8000/api/medicine/'
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_medicines_post_method(self):
-        url = 'http://127.0.0.1:8000/api/medicines/'
+        url = 'http://127.0.0.1:8000/api/medicine/'
         data = {
             'name': 'New one',
             'description': 'This is the best pain killer',

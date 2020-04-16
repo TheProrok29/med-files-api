@@ -46,9 +46,9 @@ INSTALLED_APPS = [
     'corsheaders',
     # Local
     'core',
-    'users',
-    'medicines',
-    'doctors',
+    'user',
+    'medicine',
+    'doctor',
 ]
 
 MIDDLEWARE = [
