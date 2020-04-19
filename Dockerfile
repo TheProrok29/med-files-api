@@ -1,4 +1,7 @@
-FROM python:3.7-alpine
+FROM python:3.8-alpine
+
+LABEL maintainer="TomaszDBogacki@gmail.com"
+LABEL description="This is a Python3.8 container for med-files-api app"
 
 ENV PYTHONUNBUFFERED 1
 RUN apk update && \
