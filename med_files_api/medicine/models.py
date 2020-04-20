@@ -17,7 +17,7 @@ class Medicine(models.Model):
         SUPLEMENT = 'SUP', _('Suplement')
 
     name = models.CharField(verbose_name='Name', max_length=120, unique=True)
-    description = models.TextField(verbose_name='Description')
+    description = models.TextField(verbose_name='Description', blank=True, null=True)
     med_form = models.CharField(
         verbose_name='Form', max_length=3, choices=MedicineForm.choices, default=MedicineForm.TABLETS, )
     med_type = models.CharField(
