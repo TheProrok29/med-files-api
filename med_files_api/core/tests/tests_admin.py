@@ -1,6 +1,7 @@
 from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
 from doctor.models import Doctor
+from medicine.models import Medicine
 from django.urls import reverse
 from rest_framework import status
 
@@ -71,5 +72,40 @@ class AdminSiteDoctorTests(TestCase):
     def test_doctor_create_page(self):
         """Test that the doctor create page works"""
         url = reverse('admin:doctor_doctor_add')
+        res = self.client.get(url)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+
+class AdminSiteMedicineTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.admin_user = get_user_model().objects.create_superuser(
+            email='tom@gmail.com',
+            password='password1234$$ ,'
+        )
+        self.client.force_login(self.admin_user)
+        self.medicine = Medicine.objects.create(name='Gripex',
+                                                description='This is the best pain killer',
+                                                med_form=Medicine.MedicineForm.TABLETS,
+                                                med_type=Medicine.MedicineType.PROBIOTIC,)
+
+    def test_medicines_listed(self):
+        """Test that dmedicines are listed on medicine admin page"""
+        url = reverse('admin:medicine_medicine_changelist')
+        res = self.client.get(url)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertContains(res, self.medicine.name)
+        self.assertContains(res, self.medicine.med_form)
+        self.assertContains(res, self.medicine.med_type)
+
+    def test_medicine_change_page(self):
+        """Test that the medicine edit page works"""
+        url = reverse('admin:medicine_medicine_change', args=[self.medicine.id])
+        res = self.client.get(url)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_medicine_create_page(self):
+        """Test that the medicine create page works"""
+        url = reverse('admin:medicine_medicine_add')
         res = self.client.get(url)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
