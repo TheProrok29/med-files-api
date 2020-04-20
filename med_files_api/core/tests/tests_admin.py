@@ -95,8 +95,8 @@ class AdminSiteMedicineTests(TestCase):
         res = self.client.get(url)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertContains(res, self.medicine.name)
-        self.assertContains(res, self.medicine.med_form)
-        self.assertContains(res, self.medicine.med_type)
+        self.assertContains(res, 'Tablets')
+        self.assertContains(res, 'Probiotic')
 
     def test_medicine_change_page(self):
         """Test that the medicine edit page works"""
