@@ -20,7 +20,7 @@ class Doctor(models.Model):
         ALLERGIST = 'ALL', _('Allergist')
 
     name = models.CharField(verbose_name='Name', max_length=120, unique=True)
-    adres = models.CharField(verbose_name='Adres', max_length=200)
+    adres = models.CharField(verbose_name='Adres', max_length=200, blank=True, null=True)
 
     phone_number = models.CharField(
         verbose_name='Phone Number', max_length=12, unique=True, blank=True, null=True)
