@@ -5,7 +5,6 @@ from doctor.models import Doctor
 class DoctorModelTest(TestCase):
     def test_create_doctor_with_full_data(self):
         """Test creating a new doctor"""
-
         doctor = Doctor.objects.create(name='Tom Hardy',
                                        adres='Warsaw, Chrobrego 25/4a',
                                        phone_number='765789432',
@@ -18,5 +17,4 @@ class DoctorModelTest(TestCase):
         but has default value set in model"""
         name = 'Ward Brankenmister'
         doctor = Doctor.objects.create(name=name)
-        self.assertTrue(isinstance(doctor, Doctor))
         self.assertEqual(doctor.name, name)
