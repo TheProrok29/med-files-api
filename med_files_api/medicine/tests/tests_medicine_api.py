@@ -10,7 +10,7 @@ def create_medicine(**params):
     return Medicine.objects.create(**params)
 
 
-class MedicinesApiTest(APITestCase):
+class MedicineApiTest(APITestCase):
     """Test the medicine API"""
 
     def test_medicine_endpoint_available(self):

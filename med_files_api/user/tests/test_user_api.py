@@ -4,9 +4,8 @@ from rest_framework import status
 from rest_framework.test import APIClient
 from django.urls import reverse
 
+
 CREATE_USER_URL = reverse('api:user-list')
-
-
 TOKEN_URL = reverse('user:token')
 ME_URL = reverse('user:me')
 
