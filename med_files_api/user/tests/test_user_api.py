@@ -4,9 +4,7 @@ from rest_framework import status
 from rest_framework.test import APIClient
 from django.urls import reverse
 
-# How to use reverse with DRF routers ????
-# CREATE_USER_URL = reverse('user:create')
-CREATE_USER_URL = 'http://127.0.0.1:8000/api/user/'
+CREATE_USER_URL = reverse('api:user-list')
 
 
 TOKEN_URL = reverse('user:token')

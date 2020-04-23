@@ -1,8 +1,9 @@
 from medicine.models import Medicine
 from rest_framework.test import APITestCase
 from rest_framework import status
+from django.urls import reverse
 
-MEDICINE_URL = 'http://127.0.0.1:8000/api/medicine/'
+MEDICINE_URL = reverse('api:medicine-list')
 
 
 def create_medicine(**params):
