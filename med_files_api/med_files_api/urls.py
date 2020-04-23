@@ -19,6 +19,8 @@ from doctor.views import DoctorViewSet
 from medicine.views import MedicineViewSet
 from user.views import CreateUserView
 from rest_framework import routers
+from django.conf.urls.static import static
+from django.conf import settings
 
 router = routers.DefaultRouter()
 router.register(r'medicine', MedicineViewSet, 'medicine')
@@ -29,4 +31,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include((router.urls, 'api'), namespace='api')),
     path('api/user/', include('user.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
