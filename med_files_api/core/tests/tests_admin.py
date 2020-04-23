@@ -53,7 +53,7 @@ class AdminSiteDoctorTests(TestCase):
         self.doctor = Doctor.objects.create(name='Tom Hardy',
                                             adres='Warsaw, Chrobrego 25/4a',
                                             phone_number='765789432',
-                                            doc_type=Doctor.DoctorSpecialization.SURGEON,)
+                                            doc_spec=Doctor.DoctorSpecialization.SURGEON,)
 
     def test_doctors_listed(self):
         """Test that doctors are listed on doctor admin page"""
