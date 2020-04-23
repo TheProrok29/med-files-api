@@ -25,7 +25,7 @@ class Doctor(models.Model):
     phone_number = models.CharField(
         verbose_name='Phone Number', max_length=12, unique=True, blank=True, null=True)
 
-    doc_type = models.CharField(
+    doc_spec = models.CharField(
         verbose_name='Specialization', max_length=3,
         choices=DoctorSpecialization.choices,
         default=DoctorSpecialization.FAMILY_DOCTOR)
