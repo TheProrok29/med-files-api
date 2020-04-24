@@ -2,7 +2,7 @@ from django.test import TestCase
 from medicine.models import Medicine
 
 
-class MedicinesModelTest(TestCase):
+class MedicineModelTest(TestCase):
 
     def test_create_medicine_with_full_data(self):
         """Test creating a new medicine"""
