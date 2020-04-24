@@ -3,6 +3,8 @@ from medical_examination_result.models import MedicalExaminationResult
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 
+from unittest.mock import patch
+
 
 class MedicalExaminationResultModelTest(TestCase):
 
@@ -19,6 +21,16 @@ class MedicalExaminationResultModelTest(TestCase):
         """Test medical examination result string representation"""
         med_exam_result = MedicalExaminationResult.objects.create(
             user=get_user_model().objects.create_user(email='prorowk29@vp.pl', password='pa$$w0rd'),
-            description='Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum',
+            description='Lorem Ipsum is simply dummy text of thddecc printing and typesetting industry. Lorem Ipsum',
             date_of_exam=timezone.now())
         self.assertEqual(str(med_exam_result), med_exam_result.description)
+
+    @patch('uuid.uuid4')
+    def test_exam_result_file_name_uuid(self, mock_uuid):
+        """Test that image is saved in the correct location"""
+        uuid = 'test-uuid'
+        mock_uuid.return_value = uuid
+        file_path = MedicalExaminationResult.exam_result_image_file_path(None, 'myimage.jpg')
+
+        exp_path = f'uploads/medical_examination_result/{uuid}.jpg'
+        self.assertEqual(file_path, exp_path)
