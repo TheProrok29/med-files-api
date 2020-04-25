@@ -1,5 +1,5 @@
 from django.test import TestCase
-from doctor.models import Doctor
+from ..models import Doctor
 
 
 class DoctorModelTest(TestCase):

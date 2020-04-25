@@ -1,7 +1,8 @@
-import uuid
 import os
-from django.db import models
+import uuid
+
 from django.conf import settings
+from django.db import models
 
 
 def exam_result_file_path(instance, filename):

@@ -1,9 +1,10 @@
-from django.test import TestCase
-from medical_examination_result.models import MedicalExaminationResult, exam_result_file_path
+from unittest.mock import patch
+
 from django.contrib.auth import get_user_model
+from django.test import TestCase
 from django.utils import timezone
 
-from unittest.mock import patch
+from ..models import MedicalExaminationResult, exam_result_file_path
 
 
 class MedicalExaminationResultModelTest(TestCase):

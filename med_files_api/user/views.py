@@ -1,7 +1,7 @@
+from core.models import User
 from rest_framework import mixins, viewsets, authentication, permissions, generics
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.settings import api_settings
-from core.models import User
 
 from .serializers import UserSerializer, AuthTokenSerializer
 
