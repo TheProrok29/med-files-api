@@ -1,5 +1,5 @@
 from django.test import TestCase
-from medical_examination_result.models import MedicalExaminationResult
+from medical_examination_result.models import MedicalExaminationResult, exam_result_file_path
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 
@@ -30,7 +30,7 @@ class MedicalExaminationResultModelTest(TestCase):
         """Test that image is saved in the correct location"""
         uuid = 'test-uuid'
         mock_uuid.return_value = uuid
-        file_path = MedicalExaminationResult.exam_result_image_file_path(None, 'myimage.jpg')
+        file_path = exam_result_file_path(None, 'myimage.jpg')
 
-        exp_path = f'uploads/medical_examination_result/{uuid}.jpg'
+        exp_path = f'uploads/examination_result/{uuid}.jpg'
         self.assertEqual(file_path, exp_path)
