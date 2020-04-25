@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'user',
     'medicine',
     'doctor',
-    'medical_examination_result',
+    'med_result',
 ]
 
 MIDDLEWARE = [

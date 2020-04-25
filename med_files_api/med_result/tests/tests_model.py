@@ -4,23 +4,23 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.utils import timezone
 
-from ..models import Result, exam_result_file_path
+from ..models import MedResult, exam_result_file_path
 
 
 class MedicalExaminationResultModelTest(TestCase):
 
     def test_create_exam_result(self):
         """Test creating a new exam  result"""
-        med_exam_result = MedicalExaminationResult.objects.create(
+        med_exam_result = MedResult.objects.create(
             user=get_user_model().objects.create_user(email='prorowk29@vp.pl', password='pa$$w0rd'),
             description='Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum',
             date_of_exam=timezone.now())
-        self.assertTrue(isinstance(med_exam_result, MedicalExaminationResult))
+        self.assertTrue(isinstance(med_exam_result, MedResult))
         self.assertEqual(med_exam_result.__str__(), med_exam_result.description[:100])
 
     def test_med_exam_result_str(self):
         """Test medical examination result string representation"""
-        med_exam_result = MedicalExaminationResult.objects.create(
+        med_exam_result = MedResult.objects.create(
             user=get_user_model().objects.create_user(email='prorowk29@vp.pl', password='pa$$w0rd'),
             description='Lorem Ipsum is simply dummy text of thddecc printing and typesetting industry. Lorem Ipsum',
             date_of_exam=timezone.now())
@@ -33,5 +33,5 @@ class MedicalExaminationResultModelTest(TestCase):
         mock_uuid.return_value = uuid
         file_path = exam_result_file_path(None, 'myimage.jpg')
 
-        exp_path = f'uploads/examination_result/{uuid}.jpg'
+        exp_path = f'uploads/med_result/{uuid}.jpg'
         self.assertEqual(file_path, exp_path)
