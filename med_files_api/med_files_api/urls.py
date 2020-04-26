@@ -18,6 +18,7 @@ from django.urls import path, include
 from doctor.views import DoctorViewSet
 from medicine.views import MedicineViewSet
 from user.views import CreateUserView
+from med_result.views import MedResultViewSet
 from rest_framework import routers
 from django.conf.urls.static import static
 from django.conf import settings
@@ -26,6 +27,8 @@ router = routers.DefaultRouter()
 router.register(r'medicine', MedicineViewSet, 'medicine')
 router.register(r'doctor', DoctorViewSet, 'doctor')
 router.register(r'user', CreateUserView, 'user')
+router.register(r'med_result', MedResultViewSet, 'med_result')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
