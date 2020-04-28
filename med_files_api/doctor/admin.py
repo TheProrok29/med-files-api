@@ -5,14 +5,14 @@ from .models import Doctor, DoctorSpecialization
 
 class DoctorAdmin(admin.ModelAdmin):
     ordering = ['id']
-    list_display = ['name', 'adres', 'phone_number', 'doc_spec']
+    list_display = ['name', 'adres', 'phone_number', 'specialization']
     search_fields = ('name',)
 
 
 class DoctorSpecializationAdmin(admin.ModelAdmin):
     ordering = ['id']
-    list_display = ['specialization', ]
-    search_fields = ('specialization',)
+    list_display = ['name', ]
+    search_fields = ('name',)
 
 
 admin.site.register(Doctor, DoctorAdmin)
