@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
-from doctor.models import Doctor
+from doctor.models import Doctor, DoctorSpecialization
 from medicine.models import Medicine
 from django.urls import reverse
 from rest_framework import status
@@ -50,10 +50,12 @@ class AdminSiteDoctorTests(TestCase):
             password='password1234$$ ,'
         )
         self.client.force_login(self.admin_user)
-        self.doctor = Doctor.objects.create(name='Tom Hardy',
+        self.spec = DoctorSpecialization.objects.create(name='Surgeon')
+        self.doctor = Doctor.objects.create(user=self.admin_user,
+                                            name='Tom Hardy',
                                             adres='Warsaw, Chrobrego 25/4a',
                                             phone_number='765789432',
-                                            doc_spec=Doctor.DoctorSpecialization.SURGEON,)
+                                            specialization=self.spec)
 
     def test_doctors_listed(self):
         """Test that doctors are listed on doctor admin page"""
