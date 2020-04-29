@@ -4,12 +4,13 @@ from .serializers import DoctorSerializer
 
 
 class DoctorViewSet(viewsets.ModelViewSet):
+    """"CRUD options for Doctor for authenticated user"""
     serializer_class = DoctorSerializer
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
-        """This view return a list of all doctors for the currently authenticated user."""
+        """This view return a list of all doctors for the currently authenticated user"""
         user = self.request.user
         return Doctor.objects.filter(user=user)
 
