@@ -4,12 +4,24 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 from rest_framework.test import APIClient
 from django.contrib.auth import get_user_model
-
+from ..serializers import DoctorSerializer
 DOCTOR_URL = reverse('api:doctor-list')
 
 
-class DoctorApiTest(APITestCase):
-    """Test the doctor API"""
+class PublicDoctorApiTests(APITestCase):
+    """Test the publicly available Doctor API"""
+
+    def setUp(self):
+        self.client = APIClient()
+
+    def test_login_required(self):
+        """Test that login is required for retrieving Doctor API endpoint"""
+        res = self.client.get(DOCTOR_URL)
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
+
+class PrivateDoctorApiTest(APITestCase):
+    """Test the autorized Doctor API"""
 
     def setUp(self):
         self.client = APIClient()
@@ -21,6 +33,24 @@ class DoctorApiTest(APITestCase):
         """Test  doctor endpoint is available"""
         response = self.client.get(DOCTOR_URL)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_retrieve_doctors(self):
+        """Test retrieving doctors"""
+        Doctor.objects.create(
+            user=self.user,
+            name='Fakren Makrewn',
+            specialization=self.spec,
+        )
+        Doctor.objects.create(
+            user=self.user,
+            name='Ankins Heliosferos',
+            specialization=self.spec,
+        )
+        res = self.client.get(DOCTOR_URL)
+        doctors = Doctor.objects.all().order_by('-name')
+        serializer = DoctorSerializer(doctors, many=True)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data, serializer.data)
 
     def test_create_doctor_with_full_data_success(self):
         """Test createing doctor with valid payload is successful"""
