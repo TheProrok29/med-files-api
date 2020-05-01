@@ -110,7 +110,6 @@ class PrivateDoctorApiTest(APITestCase):
 
     def test_delete_doctor(self):
         """Test deleting doctor"""
-
         res = self.client.delete(self.DOCTOR_DETAIL_URL)
         self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
 
@@ -122,5 +121,5 @@ class PrivateDoctorApiTest(APITestCase):
             'phone_number': '987654321',
             'specialization': self.spec.id,
         }
-        res = self.client.patch((self.DOCTOR_DETAIL_URL))
+        res = self.client.patch(self.DOCTOR_DETAIL_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
