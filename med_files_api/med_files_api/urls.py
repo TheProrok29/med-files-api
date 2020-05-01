@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from doctor.views import DoctorViewSet
+from doctor.views import DoctorViewSet, DoctorSpecializationViewSet
 from medicine.views import MedicineViewSet
 from user.views import CreateUserView
 from med_result.views import MedResultViewSet
@@ -26,6 +26,7 @@ from django.conf import settings
 router = routers.DefaultRouter()
 router.register(r'medicine', MedicineViewSet, 'medicine')
 router.register(r'doctor', DoctorViewSet, 'doctor')
+router.register(r'specialization', DoctorSpecializationViewSet, 'doctor_specialization')
 router.register(r'user', CreateUserView, 'user')
 router.register(r'med_result', MedResultViewSet, 'med_result')
 
