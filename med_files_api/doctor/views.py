@@ -8,11 +8,11 @@ class DoctorViewSet(viewsets.ModelViewSet):
     serializer_class = DoctorSerializer
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
+    queryset = Doctor.objects.all()
 
     def get_queryset(self):
         """This view return a list of all doctors for the currently authenticated user"""
-        user = self.request.user
-        return Doctor.objects.filter(user=user)
+        return self.queryset.filter(user=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
