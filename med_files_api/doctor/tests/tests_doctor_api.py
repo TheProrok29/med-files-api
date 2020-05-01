@@ -39,8 +39,8 @@ class PrivateDoctorApiTest(APITestCase):
 
     def test_doctor_endpoint_available(self):
         """Test  doctor endpoint is available"""
-        response = self.client.get(DOCTOR_URL)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        res = self.client.get(DOCTOR_URL)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
 
     def test_retrieve_doctors(self):
         """Test retrieving doctors"""
@@ -95,6 +95,22 @@ class PrivateDoctorApiTest(APITestCase):
         }
         res = self.client.post(DOCTOR_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_show_only_user_doctor(self):
+        """Show only doctors who were created by the logged in user"""
+        Doctor.objects.create(
+            user=self.user,
+            name='Mikael Blumberg',
+            specialization=self.spec)
+        new_user = get_user_model().objects.create_user('frankbbf@gmail.pl', 'testpasswd')
+        Doctor.objects.create(
+            user=new_user,
+            name='Pat Sement',
+            specialization=self.spec)
+        self.client.force_authenticate(new_user)
+        res = self.client.get(DOCTOR_URL)
+        self.assertNotContains(res, 'Mikael Blumberg')
+        self.assertContains(res, 'Pat Sement')
 
     def test_create_doctor_invalid_specialization_fail(self):
         """"Test creating doctor with broken payload(specialziation) must fail"""
