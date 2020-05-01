@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Doctor
+from .models import Doctor, DoctorSpecialization
 
 
 class DoctorSerializer(serializers.ModelSerializer):
@@ -8,3 +8,11 @@ class DoctorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doctor
         fields = ('id', 'name', 'adres', 'phone_number', 'specialization')
+
+
+class DoctorSpecializationSerializer(serializers.ModelSerializer):
+    """Serializer a DoctorSpecialization model field"""
+
+    class Meta:
+        model = DoctorSpecialization
+        fields = ('id', 'name')
