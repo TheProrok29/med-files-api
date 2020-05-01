@@ -5,6 +5,8 @@ from rest_framework.test import APITestCase
 from rest_framework.test import APIClient
 from django.contrib.auth import get_user_model
 from ..serializers import DoctorSerializer
+
+
 DOCTOR_URL = reverse('api:doctor-list')
 
 
@@ -28,6 +30,13 @@ class PrivateDoctorApiTest(APITestCase):
         self.user = get_user_model().objects.create_user('prorsok29@vp.pl', 'testpasswd')
         self.client.force_authenticate(self.user)
         self.spec = DoctorSpecialization.objects.create(name='Laryngologist')
+        self.new_doctor = Doctor.objects.create(
+            user=self.user,
+            name='Oleg Faustin',
+            adres='Warsaw 25/b',
+            phone_number='478789086',
+            specialization=self.spec)
+        self.DOCTOR_DETAIL_URL = reverse('api:doctor-detail', kwargs={'pk': self.new_doctor.pk})
 
     def test_doctor_endpoint_available(self):
         """Test  doctor endpoint is available"""
@@ -80,17 +89,11 @@ class PrivateDoctorApiTest(APITestCase):
         """Test creating doctor that already exists fails"""
         payload = {
             'user': self.user,
-            'name': 'Fakren Makrewn',
+            'name': 'Oleg Faustin',
             'adres': 'Opole 24/b',
             'phone_number': '456789086',
             'specialization': self.spec.id,
         }
-        Doctor.objects.create(
-            user=self.user,
-            name='Fakren Makrewn',
-            adres='Opole 24/b',
-            phone_number='456789086',
-            specialization=self.spec)
         res = self.client.post(DOCTOR_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
@@ -104,3 +107,20 @@ class PrivateDoctorApiTest(APITestCase):
         }
         res = self.client.post(DOCTOR_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_delete_doctor(self):
+        """Test deleting doctor"""
+
+        res = self.client.delete(self.DOCTOR_DETAIL_URL)
+        self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_update_doctor(self):
+        """Test update existing doctor"""
+        payload = {
+            'name': 'Fakren Makrewn',
+            'adres': 'Warsaw 24/b',
+            'phone_number': '987654321',
+            'specialization': self.spec.id,
+        }
+        res = self.client.patch((self.DOCTOR_DETAIL_URL))
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
