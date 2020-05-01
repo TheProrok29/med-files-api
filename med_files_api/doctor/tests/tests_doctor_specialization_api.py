@@ -27,7 +27,6 @@ class PrivateDoctorSpecializationApiTest(APITestCase):
     def setUp(self):
         self.client = APIClient()
         self.user1 = get_user_model().objects.create_user('prorsok29@vp.pl', 'testpasswd')
-        self.user2 = get_user_model().objects.create_user('adam@gmail.com.pl', 'testpasswd2')
         self.client.force_authenticate(self.user1)
 
     def test_doctor_specialization_endpoint_available(self):
@@ -74,3 +73,11 @@ class PrivateDoctorSpecializationApiTest(APITestCase):
         payload = {'name': 'Surgeon'}
         res = self.client.patch(DEL_SPEC_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_different_user_can_see_all_specialziation(self):
+        """"Test that all users can see all added specialziation"""
+        payload = {'name': 'Laryngologist', }
+        res = self.client.post(DOC_SPECIALIZATION_URL, payload)
+        self.client.force_authenticate(get_user_model().objects.create_user('adam@gmail.com.pl', 'testpasswd2'))
+        res = self.client.get(DOC_SPECIALIZATION_URL)
+        self.assertContains(res, 'Laryngologist')

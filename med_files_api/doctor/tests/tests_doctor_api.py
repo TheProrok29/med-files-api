@@ -96,7 +96,7 @@ class PrivateDoctorApiTest(APITestCase):
         res = self.client.post(DOCTOR_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_show_only_user_doctor(self):
+    def test_see_only_user_doctor(self):
         """Show only doctors who were created by the logged in user"""
         Doctor.objects.create(
             user=self.user,

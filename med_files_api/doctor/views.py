@@ -24,3 +24,4 @@ class DoctorSpecializationViewSet(viewsets.ModelViewSet):
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
     queryset = DoctorSpecialization.objects.all()
+
