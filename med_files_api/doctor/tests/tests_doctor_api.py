@@ -1,8 +1,7 @@
 from django.urls import reverse
 from ..models import Doctor, DoctorSpecialization
 from rest_framework import status
-from rest_framework.test import APITestCase
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase, APIClient
 from django.contrib.auth import get_user_model
 from ..serializers import DoctorSerializer
 
