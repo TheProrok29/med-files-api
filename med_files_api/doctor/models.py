@@ -17,7 +17,7 @@ class Doctor(models.Model):
         CARDIOLOGIST = 'CAR', _('Cardiologist')
         ONCOLOGIST = 'ONC', _('Oncologist')
         GASTROENTEROLOGIST = 'GAS', _('Gastroenterologist')
-        ENDYCORNOLOGIST = 'END', _('Endocrinologist.')
+        ENDYCORNOLOGIST = 'END', _('Endocrinologist')
         DERMATOLOGIST = 'DER', _('Dermatologist')
         ALLERGIST = 'ALL', _('Allergist')
 

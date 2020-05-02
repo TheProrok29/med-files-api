@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.conf import settings
 
 
 class Medicine(models.Model):
@@ -16,11 +17,12 @@ class Medicine(models.Model):
         VITAMIN = 'VIT', _('Vitamin')
         SUPLEMENT = 'SUP', _('Suplement')
 
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(verbose_name='Name', max_length=120, unique=True)
     description = models.TextField(verbose_name='Description', blank=True, null=True)
-    med_form = models.CharField(
+    form = models.CharField(
         verbose_name='Form', max_length=3, choices=MedicineForm.choices, default=MedicineForm.TABLETS, )
-    med_type = models.CharField(
+    _type = models.CharField(
         verbose_name='Type', max_length=3, choices=MedicineType.choices, default=MedicineType.VITAMIN, )
 
     def __str__(self):
