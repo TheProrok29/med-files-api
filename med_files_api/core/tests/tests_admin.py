@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
-from doctor.models import Doctor, DoctorSpecialization
+from doctor.models import Doctor
 from medicine.models import Medicine
 from django.urls import reverse
 from rest_framework import status
@@ -56,12 +56,11 @@ class AdminSiteDoctorTests(TestCase):
             password='password1234$$ ,'
         )
         self.client.force_login(self.admin_user)
-        self.spec = DoctorSpecialization.objects.create(name='Surgeon')
         self.doctor = Doctor.objects.create(user=self.admin_user,
                                             name='Tom Hardy',
                                             adres='Warsaw, Chrobrego 25/4a',
                                             phone_number='765789432',
-                                            specialization=self.spec)
+                                            specialization=Doctor.DoctorSpecialization.GYNECALOGIST)
 
     def test_doctors_listed(self):
         """Test that doctors are listed on doctor admin page"""
@@ -86,42 +85,6 @@ class AdminSiteDoctorTests(TestCase):
     def test_doctor_delete_page(self):
         """Test that the doctor delete page works"""
         url = reverse('admin:doctor_doctor_delete', args=[self.doctor.id])
-        res = self.client.get(url)
-        self.assertEqual(res.status_code, status.HTTP_200_OK)
-
-
-class AdminSiteDoctorSpecializationTests(TestCase):
-    def setUp(self):
-        self.client = Client()
-        self.admin_user = get_user_model().objects.create_superuser(
-            email='tom@gmail.com',
-            password='password1234$$ ,'
-        )
-        self.client.force_login(self.admin_user)
-        self.spec = DoctorSpecialization.objects.create(name='Surgeon')
-
-    def test_doctors_specialization_listed(self):
-        """Test that doctors specialziation are listed on doctor specialization admin page"""
-        url = reverse('admin:doctor_doctorspecialization_changelist')
-        res = self.client.get(url)
-        self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertContains(res, self.spec.name)
-
-    def test_doctor_specialziation_change_page(self):
-        """Test that the doctor specialization edit page works"""
-        url = reverse('admin:doctor_doctorspecialization_change', args=[self.spec.id])
-        res = self.client.get(url)
-        self.assertEqual(res.status_code, status.HTTP_200_OK)
-
-    def test_doctor_specialziation_create_page(self):
-        """Test that the doctor specialziation create page works"""
-        url = reverse('admin:doctor_doctorspecialization_add')
-        res = self.client.get(url)
-        self.assertEqual(res.status_code, status.HTTP_200_OK)
-
-    def test_doctor_specialziation_delete_page(self):
-        """Test that the doctor specialization delete page works"""
-        url = reverse('admin:doctor_doctorspecialization_change', args=[self.spec.id])
         res = self.client.get(url)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
