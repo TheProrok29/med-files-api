@@ -6,4 +6,4 @@ from .models import Medicine
 class MedicineSerializer(serializers.ModelSerializer):
     class Meta:
         model = Medicine
-        fields = ('id', 'name', 'description', 'med_form', 'med_type')
+        fields = ('id', 'name', 'description', 'form', '_type')
