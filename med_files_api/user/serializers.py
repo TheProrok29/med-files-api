@@ -4,11 +4,11 @@ from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserAuthDataSerializer(serializers.ModelSerializer):
     """Serializert for the users object"""
     class Meta:
         model = get_user_model()
-        fields = ('id', 'email', 'password', 'name')
+        fields = ('id', 'email', 'password')
         extra_kwargs = {'password': {'write_only': True, 'min_length': 5}}
 
     def create(self, validated_data):
@@ -24,6 +24,13 @@ class UserSerializer(serializers.ModelSerializer):
             user.set_password(password)
             user.save()
         return user
+
+
+class UserDataSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = get_user_model()
+        fields = ('id', 'name', 'born_date')
 
 
 class AuthTokenSerializer(serializers.Serializer):

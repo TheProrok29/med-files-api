@@ -6,9 +6,9 @@ from .serializers import DoctorSerializer, DoctorSpecializationSerializer
 class DoctorViewSet(viewsets.ModelViewSet):
     """"CRUD options for Doctor for authenticated user"""
     serializer_class = DoctorSerializer
+    queryset = Doctor.objects.all()
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
-    queryset = Doctor.objects.all()
 
     def get_queryset(self):
         """This view return a list of all doctors for the currently authenticated user"""
