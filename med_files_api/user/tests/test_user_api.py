@@ -3,6 +3,8 @@ from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
+import datetime
+
 
 CREATE_USER_URL = reverse('api:user-list')
 TOKEN_URL = reverse('user:token')
@@ -25,7 +27,6 @@ class PublicUserApiTests(TestCase):
         payload = {
             'email': 'test@vp.pl',
             'password': 'somepassword',
-            'name': 'Jack Torrance',
         }
         res = self.client.post(CREATE_USER_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
@@ -47,7 +48,6 @@ class PublicUserApiTests(TestCase):
         """Test that the password must be be more than 5 characters"""
         payload = {'email': 'tom@vp.pl', 'password': 'abc'}
         res = self.client.post(CREATE_USER_URL, payload)
-
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
         user_exists = get_user_model().objects.filter(
             email=payload['email']
@@ -77,9 +77,16 @@ class PublicUserApiTests(TestCase):
         self.assertNotIn('token', res.data)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_create_token_missing_field(self):
+    def test_create_token_missing_password_field(self):
         """Test that token is not created if None password or email"""
         payload = {'email': 'abc@gmail.com', 'password': ''}
+        res = self.client.post(TOKEN_URL, payload)
+        self.assertNotIn('token', res.data)
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_create_token_missing_email_field(self):
+        """Test that token is not created if None password or email"""
+        payload = {'email': '', 'password': 'testpass'}
         res = self.client.post(TOKEN_URL, payload)
         self.assertNotIn('token', res.data)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
@@ -97,14 +104,14 @@ class PrivateUserApiTests(TestCase):
         self.user = create_user(
             email='prorok292vp.pl',
             password='testpass',
-            name='Tom',
+            name='Tom Fakir',
             born_date='1992-11-29'
         )
         self.client = APIClient()
         self.client.force_authenticate(user=self.user)
 
     def test_retrieve_profile_data_success(self):
-        """Tet retrieving profile for logged in user"""
+        """Test retrieving profile for logged in user"""
         res = self.client.get(ME_URL)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, {
@@ -113,16 +120,35 @@ class PrivateUserApiTests(TestCase):
             'born_date': self.user.born_date,
         })
 
+    def test_retrieve_profile_authentication_data_success(self):
+        """Test retrieving profile authentication data for logged in user"""
+        res = self.client.get(ME_AUTH_URL)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data, {
+            'id': self.user.id,
+            'email': self.user.email,
+        })
+        self.assertTrue(self.user.check_password('testpass'))
+
     def test_post_not_allowed(self):
-        """"Test that POST is not allowed on the me ulr"""
+        """"Test that POST is not allowed on the me URL"""
         res = self.client.post(ME_URL, {})
         self.assertEqual(res.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
-    def test_update_user_auth_profile_data(self):
-        """Test updating the user profile for authenticated user"""
+    def test_update_user_auth_data(self):
+        """Test updating the user auth data for authenticated user"""
         payload = {'email': 'advvfaf@vp.pl', 'password': 'newpassword123'}
         res = self.client.patch(ME_AUTH_URL, payload)
         self.user.refresh_from_db()
         self.assertEqual(self.user.email, payload['email'])
         self.assertTrue(self.user.check_password(payload['password']))
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_update_user_data(self):
+        """Test updating the user data for authenticated user"""
+        payload = {'name': 'Jan Kowalski', 'born_date': datetime.date(1989, 7, 11)}
+        res = self.client.patch(ME_URL, payload)
+        self.user.refresh_from_db()
+        self.assertEqual(self.user.name, payload['name'])
+        self.assertEqual(self.user.born_date, payload['born_date'])
         self.assertEqual(res.status_code, status.HTTP_200_OK)
