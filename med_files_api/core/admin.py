@@ -8,10 +8,10 @@ from .models import User
 class UserAdmin(BaseUserAdmin):
     """Override UserAdmin class to use CRUD methods related to own user model in django admin"""
     ordering = ['id']
-    list_display = ['email', 'name', 'is_superuser']
+    list_display = ['email', 'name', 'born_date', 'is_superuser']
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        (_('Personal Info'), {'fields': ('name',)}),
+        (_('Personal Info'), {'fields': ('name', 'born_date')}),
         (
             _('Permissions'),
             {'fields': ('is_active', 'is_staff', 'is_superuser')}
