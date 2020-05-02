@@ -1,5 +1,5 @@
 from django.urls import reverse
-from ..models import Doctor, DoctorSpecialization
+from ..models import Doctor
 from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
 from django.contrib.auth import get_user_model
@@ -28,13 +28,12 @@ class PrivateDoctorApiTest(APITestCase):
         self.client = APIClient()
         self.user = get_user_model().objects.create_user('prorsok29@vp.pl', 'testpasswd')
         self.client.force_authenticate(self.user)
-        self.spec = DoctorSpecialization.objects.create(name='Laryngologist')
         self.new_doctor = Doctor.objects.create(
             user=self.user,
             name='Oleg Faustin',
             adres='Warsaw 25/b',
             phone_number='478789086',
-            specialization=self.spec)
+            specialization=Doctor.DoctorSpecialization.ALLERGIST)
         self.DOCTOR_DETAIL_URL = reverse('api:doctor-detail', kwargs={'pk': self.new_doctor.pk})
 
     def test_doctor_endpoint_available(self):
@@ -47,12 +46,12 @@ class PrivateDoctorApiTest(APITestCase):
         Doctor.objects.create(
             user=self.user,
             name='Fakren Makrewn',
-            specialization=self.spec,
+            specialization=Doctor.DoctorSpecialization.ALLERGIST
         )
         Doctor.objects.create(
             user=self.user,
             name='Ankins Heliosferos',
-            specialization=self.spec,
+            specialization=Doctor.DoctorSpecialization.SURGEON
         )
         res = self.client.get(DOCTOR_URL)
         doctors = Doctor.objects.all().order_by('-name')
@@ -66,7 +65,7 @@ class PrivateDoctorApiTest(APITestCase):
             'name': 'Fakren Makrewn',
             'adres': 'Opole 24/b',
             'phone_number': '456789086',
-            'specialization': self.spec.id,
+            'specialization': Doctor.DoctorSpecialization.NEUROLOGIST
         }
         res = self.client.post(DOCTOR_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
@@ -77,7 +76,7 @@ class PrivateDoctorApiTest(APITestCase):
         """Test createing doctor with valid min payload is successful"""
         payload = {
             'name': 'Fakren Makrewn',
-            'specialization': self.spec.id,
+            'specialization': Doctor.DoctorSpecialization.ONCOLOGIST
         }
         res = self.client.post(DOCTOR_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
@@ -91,7 +90,7 @@ class PrivateDoctorApiTest(APITestCase):
             'name': 'Oleg Faustin',
             'adres': 'Opole 24/b',
             'phone_number': '456789086',
-            'specialization': self.spec.id,
+            'specialization': Doctor.DoctorSpecialization.ALLERGIST
         }
         res = self.client.post(DOCTOR_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
@@ -101,12 +100,12 @@ class PrivateDoctorApiTest(APITestCase):
         Doctor.objects.create(
             user=self.user,
             name='Mikael Blumberg',
-            specialization=self.spec)
+            specialization=Doctor.DoctorSpecialization.ALLERGIST)
         new_user = get_user_model().objects.create_user('frankbbf@gmail.pl', 'testpasswd')
         Doctor.objects.create(
             user=new_user,
             name='Pat Sement',
-            specialization=self.spec)
+            specialization=Doctor.DoctorSpecialization.ALLERGIST)
         self.client.force_authenticate(new_user)
         res = self.client.get(DOCTOR_URL)
         self.assertNotContains(res, 'Mikael Blumberg')
@@ -134,7 +133,7 @@ class PrivateDoctorApiTest(APITestCase):
             'name': 'Fakren Makrewn',
             'adres': 'Warsaw 24/b',
             'phone_number': '987654321',
-            'specialization': self.spec.id,
+            'specialization': Doctor.DoctorSpecialization.ORTHOPEDIST,
         }
         res = self.client.patch(self.DOCTOR_DETAIL_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
