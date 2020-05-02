@@ -7,6 +7,7 @@ from rest_framework.test import APIClient
 CREATE_USER_URL = reverse('api:user-list')
 TOKEN_URL = reverse('user:token')
 ME_URL = reverse('user:me')
+ME_AUTH_URL = reverse('user:auth')
 
 
 def create_user(**params):
@@ -96,19 +97,20 @@ class PrivateUserApiTests(TestCase):
         self.user = create_user(
             email='prorok292vp.pl',
             password='testpass',
-            name='Tom'
+            name='Tom',
+            born_date='1992-11-29'
         )
         self.client = APIClient()
         self.client.force_authenticate(user=self.user)
 
-    def test_retrieve_profile_success(self):
+    def test_retrieve_profile_data_success(self):
         """Tet retrieving profile for logged in user"""
         res = self.client.get(ME_URL)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, {
             'id': self.user.id,
             'name': self.user.name,
-            'email': self.user.email
+            'born_date': self.user.born_date,
         })
 
     def test_post_not_allowed(self):
@@ -116,11 +118,11 @@ class PrivateUserApiTests(TestCase):
         res = self.client.post(ME_URL, {})
         self.assertEqual(res.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
-    def test_update_user_profile(self):
+    def test_update_user_auth_profile_data(self):
         """Test updating the user profile for authenticated user"""
-        payload = {'name': 'new name', 'password': 'newpassword123'}
-        res = self.client.patch(ME_URL, payload)
+        payload = {'email': 'advvfaf@vp.pl', 'password': 'newpassword123'}
+        res = self.client.patch(ME_AUTH_URL, payload)
         self.user.refresh_from_db()
-        self.assertEqual(self.user.name, payload['name'])
+        self.assertEqual(self.user.email, payload['email'])
         self.assertTrue(self.user.check_password(payload['password']))
         self.assertEqual(res.status_code, status.HTTP_200_OK)
