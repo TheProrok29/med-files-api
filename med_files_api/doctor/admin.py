@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Doctor, DoctorSpecialization
+from .models import Doctor
 
 
 class DoctorAdmin(admin.ModelAdmin):
@@ -9,11 +9,4 @@ class DoctorAdmin(admin.ModelAdmin):
     search_fields = ('name',)
 
 
-class DoctorSpecializationAdmin(admin.ModelAdmin):
-    ordering = ['id']
-    list_display = ['name', ]
-    search_fields = ('name',)
-
-
 admin.site.register(Doctor, DoctorAdmin)
-admin.site.register(DoctorSpecialization, DoctorSpecializationAdmin)
