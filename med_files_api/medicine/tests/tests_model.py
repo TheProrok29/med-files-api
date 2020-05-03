@@ -1,16 +1,22 @@
 from django.test import TestCase
-
+from django.contrib.auth import get_user_model
 from ..models import Medicine
 
 
 class MedicineModelTest(TestCase):
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(
+            email='test@something.com',
+            password='Testpassword123')
 
     def test_create_medicine_with_full_data(self):
         """Test creating a new medicine"""
-        medicine = Medicine.objects.create(name='Gripex',
-                                           description='This is the best pain killer',
-                                           form=Medicine.MedicineForm.TABLETS,
-                                           _type=Medicine.MedicineType.PROBIOTIC,)
+        medicine = Medicine.objects.create(
+            user=self.user,
+            name='Gripex',
+            description='This is the best pain killer',
+            med_form=Medicine.MedicineForm.TABLETS,
+            med_type=Medicine.MedicineType.PROBIOTIC,)
         self.assertTrue(isinstance(medicine, Medicine))
         self.assertEqual(medicine.__str__(), medicine.name)
 
@@ -19,6 +25,6 @@ class MedicineModelTest(TestCase):
         are mandatory but have default value set in model"""
         expected_type = 'VIT'
         expected_form = 'TAB'
-        medicine = Medicine.objects.create(name='Apap')
-        self.assertEqual(medicine.type, expected_type)
-        self.assertEqual(medicine._form, expected_form)
+        medicine = Medicine.objects.create(user=self.user, name='Apap')
+        self.assertEqual(medicine.med_type, expected_type)
+        self.assertEqual(medicine.med_form, expected_form)
