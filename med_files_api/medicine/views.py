@@ -15,4 +15,5 @@ class MedicineViewSet(viewsets.ModelViewSet):
         return self.queryset.filter(user=self.request.user)
 
     def perform_create(self, serializer):
+        """Automatically add the user to the created medicine"""
         serializer.save(user=self.request.user)
