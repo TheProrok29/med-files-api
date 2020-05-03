@@ -20,9 +20,9 @@ class Medicine(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(verbose_name='Name', max_length=120)
     description = models.TextField(verbose_name='Description', blank=True, null=True)
-    form = models.CharField(
+    med_form = models.CharField(
         verbose_name='Form', max_length=3, choices=MedicineForm.choices, default=MedicineForm.TABLETS, )
-    _type = models.CharField(
+    med_type = models.CharField(
         verbose_name='Type', max_length=3, choices=MedicineType.choices, default=MedicineType.VITAMIN, )
 
     class Meta:
