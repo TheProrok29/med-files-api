@@ -97,7 +97,8 @@ class AdminSiteMedicineTests(TestCase):
             password='password1234$$ ,'
         )
         self.client.force_login(self.admin_user)
-        self.medicine = Medicine.objects.create(name='Gripex',
+        self.medicine = Medicine.objects.create(user=self.admin_user,
+                                                name='Gripex',
                                                 description='This is the best pain killer',
                                                 med_form=Medicine.MedicineForm.TABLETS,
                                                 med_type=Medicine.MedicineType.PROBIOTIC,)
