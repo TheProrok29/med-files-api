@@ -18,12 +18,17 @@ class Medicine(models.Model):
         SUPLEMENT = 'SUP', _('Suplement')
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    name = models.CharField(verbose_name='Name', max_length=120, unique=True)
+    name = models.CharField(verbose_name='Name', max_length=120)
     description = models.TextField(verbose_name='Description', blank=True, null=True)
     form = models.CharField(
         verbose_name='Form', max_length=3, choices=MedicineForm.choices, default=MedicineForm.TABLETS, )
     _type = models.CharField(
         verbose_name='Type', max_length=3, choices=MedicineType.choices, default=MedicineType.VITAMIN, )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'name'], name='medicine per user')
+        ]
 
     def __str__(self):
         return self.name
