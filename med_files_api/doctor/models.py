@@ -23,7 +23,7 @@ class Doctor(models.Model):
         ALLERGIST = 'ALL', _('Allergist')
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    name = models.CharField(verbose_name='Name', max_length=120, unique=True)
+    name = models.CharField(verbose_name='Name', max_length=120)
     adres = models.CharField(verbose_name='Adres', max_length=200, blank=True, null=True)
     phone_number = models.CharField(
         verbose_name='Phone Number', max_length=12, blank=True, null=True)
@@ -31,6 +31,11 @@ class Doctor(models.Model):
         verbose_name='Specialization', max_length=3,
         choices=DoctorSpecialization.choices,
         default=DoctorSpecialization.FAMILY_DOCTOR)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'name'], name='doctor per user')
+        ]
 
     def __str__(self):
         return self.name

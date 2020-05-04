@@ -21,7 +21,7 @@ class MedicineModelTest(TestCase):
         self.assertTrue(isinstance(medicine, Medicine))
         self.assertEqual(medicine.__str__(), medicine.name)
 
-    def test_medicine_creation_with_minimum_data_and_default_value(self):
+    def test_create_medicine_with_minimum_data_and_default_value(self):
         """Test creating a new medicine with minimum data; med_type and med_form
         are mandatory but have default value set in model"""
         expected_type = 'VIT'
