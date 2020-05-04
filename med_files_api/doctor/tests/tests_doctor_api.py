@@ -10,8 +10,7 @@ DOCTOR_URL = reverse('api:doctor-list')
 
 
 def get_doctor_detail_url(doctor):
-    """Get doctor instance and return URL for this object
-    using reverse function"""
+    """Return detail url for doctor instance passed as a parametr"""
     return reverse('api:doctor-detail', kwargs={'pk': doctor.pk})
 
 
@@ -138,3 +137,5 @@ class PrivateDoctorApiTest(APITestCase):
         }
         res = self.client.patch(get_doctor_detail_url(self.new_doctor), payload)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.new_doctor.refresh_from_db()
+        self.assertEqual(self.new_doctor.phone_number, payload['phone_number'])
