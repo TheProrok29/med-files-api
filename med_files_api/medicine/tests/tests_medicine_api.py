@@ -13,7 +13,7 @@ def get_medicine_detail_url(medicine):
     return reverse('api:medicine-detail', kwargs={'pk': medicine.pk})
 
 
-class PublicMecicineApiTest(APITestCase):
+class PublicMedicineApiTest(APITestCase):
     """Test the public medicine API endpoint"""
 
     def test_login_required(self):

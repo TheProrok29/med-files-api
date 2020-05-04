@@ -1,8 +1,7 @@
-from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from rest_framework import status
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 import tempfile
 import os
 from PIL import Image
@@ -28,9 +27,8 @@ def image_upload_url(med_result_id):
     return reverse('api:med_result-upload-image', args=[med_result_id])
 
 
-class MedResultImageUploadTests(TestCase):
+class MedResultImageUploadTests(APITestCase):
     def setUp(self):
-        self.client = APIClient()
         self.user = get_user_model().objects.create_user('prorsok29@vp.pl', 'testpasswd')
         self.client.force_authenticate(self.user)
         self.med_result = sample_med_result(user=self.user)

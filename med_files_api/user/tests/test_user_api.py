@@ -1,8 +1,7 @@
 from django.contrib.auth import get_user_model
-from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 import datetime
 
 
@@ -16,14 +15,11 @@ def create_user(**params):
     return get_user_model().objects.create_user(**params)
 
 
-class PublicUserApiTests(TestCase):
+class PublicUserApiTests(APITestCase):
     """Test the users API (public)"""
 
-    def setUp(self):
-        self.client = APIClient()
-
     def test_create_valid_user_success(self):
-        """Test createing user with valid payload is successful"""
+        """Test creating user with valid payload is successful"""
         payload = {
             'email': 'test@vp.pl',
             'password': 'somepassword',
@@ -97,7 +93,7 @@ class PublicUserApiTests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
-class PrivateUserApiTests(TestCase):
+class PrivateUserApiTests(APITestCase):
     """Test API requests that require authentication"""
 
     def setUp(self):
@@ -107,7 +103,6 @@ class PrivateUserApiTests(TestCase):
             name='Tom Fakir',
             born_date='1992-11-29'
         )
-        self.client = APIClient()
         self.client.force_authenticate(user=self.user)
 
     def test_retrieve_profile_data_success(self):
