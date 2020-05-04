@@ -1,5 +1,4 @@
 from rest_framework import viewsets, authentication, permissions
-
 from .models import Medicine
 from .serializers import MedicineSerializer
 
@@ -8,7 +7,7 @@ class MedicineViewSet(viewsets.ModelViewSet):
     """"CRUD options for Medicine for authenticated user"""
     serializer_class = MedicineSerializer
     queryset = Medicine.objects.all()
-    authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
+    authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):

@@ -36,11 +36,6 @@ class PrivateDoctorApiTest(APITestCase):
             phone_number='478789086',
             specialization=Doctor.DoctorSpecialization.ALLERGIST)
 
-    def test_doctor_endpoint_available(self):
-        """Test  doctor endpoint is available"""
-        res = self.client.get(DOCTOR_URL)
-        self.assertEqual(res.status_code, status.HTTP_200_OK)
-
     def test_retrieve_doctors(self):
         """Test retrieving doctors"""
         Doctor.objects.create(
