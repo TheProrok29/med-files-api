@@ -9,6 +9,12 @@ from ..serializers import DoctorSerializer
 DOCTOR_URL = reverse('api:doctor-list')
 
 
+def get_doctor_detail_url(doctor):
+    """Get doctor instance and return URL for this object
+    using reverse function"""
+    return reverse('api:doctor-detail', kwargs={'pk': doctor.pk})
+
+
 class PublicDoctorApiTests(APITestCase):
     """Test the publicly available Doctor API"""
 
@@ -30,7 +36,6 @@ class PrivateDoctorApiTest(APITestCase):
             adres='Warsaw 25/b',
             phone_number='478789086',
             specialization=Doctor.DoctorSpecialization.ALLERGIST)
-        self.DOCTOR_DETAIL_URL = reverse('api:doctor-detail', kwargs={'pk': self.new_doctor.pk})
 
     def test_doctor_endpoint_available(self):
         """Test  doctor endpoint is available"""
@@ -91,7 +96,7 @@ class PrivateDoctorApiTest(APITestCase):
         res = self.client.post(DOCTOR_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_see_only_user_doctor(self):
+    def test_see_only_user_doctors(self):
         """Show only doctors who were created by the logged in user"""
         Doctor.objects.create(
             user=self.user,
@@ -120,7 +125,7 @@ class PrivateDoctorApiTest(APITestCase):
 
     def test_delete_doctor(self):
         """Test deleting doctor"""
-        res = self.client.delete(self.DOCTOR_DETAIL_URL)
+        res = self.client.delete(get_doctor_detail_url(self.new_doctor))
         self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_update_doctor(self):
@@ -131,5 +136,5 @@ class PrivateDoctorApiTest(APITestCase):
             'phone_number': '987654321',
             'specialization': Doctor.DoctorSpecialization.ORTHOPEDIST,
         }
-        res = self.client.patch(self.DOCTOR_DETAIL_URL, payload)
+        res = self.client.patch(get_doctor_detail_url(self.new_doctor), payload)
         self.assertEqual(res.status_code, status.HTTP_200_OK)

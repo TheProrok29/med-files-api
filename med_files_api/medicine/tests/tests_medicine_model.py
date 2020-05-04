@@ -35,15 +35,13 @@ class MedicineModelTest(TestCase):
         must be success"""
         medicine1 = Medicine.objects.create(
             user=self.user,
-            name='Gripex',
-            description='This is the best pain killer')
+            name='Gripex')
         user = get_user_model().objects.create_user(
             email='tom@gmail.com',
             password='Testpassword123')
         medicine2 = Medicine.objects.create(
             user=user,
-            name='Gripex',
-            description='This is the best pain killer')
+            name='Gripex')
         self.assertEqual(Medicine.objects.all().count(), 2)
         self.assertEqual(medicine1.name, medicine2.name)
 
@@ -52,11 +50,9 @@ class MedicineModelTest(TestCase):
         must be fails"""
         Medicine.objects.create(
             user=self.user,
-            name='Gripex',
-            description='This is the best pain killer')
+            name='Gripex')
         with self.assertRaises(Exception) as raised:
             Medicine.objects.create(
                 user=self.user,
-                name='Gripex',
-                description='This is the best pain killer')
+                name='Gripex')
         self.assertEqual(IntegrityError, type(raised.exception))
