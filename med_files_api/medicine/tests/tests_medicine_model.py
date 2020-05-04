@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from ..models import Medicine
+from django.db.utils import IntegrityError
 
 
 class MedicineModelTest(TestCase):
@@ -28,3 +29,34 @@ class MedicineModelTest(TestCase):
         medicine = Medicine.objects.create(user=self.user, name='Apap')
         self.assertEqual(medicine.med_type, expected_type)
         self.assertEqual(medicine.med_form, expected_form)
+
+    def test_create_the_same_medicine_for_different_user_success(self):
+        """Test creating the same medicine for different user based on database constraint
+        must be success"""
+        medicine1 = Medicine.objects.create(
+            user=self.user,
+            name='Gripex',
+            description='This is the best pain killer')
+        user = get_user_model().objects.create_user(
+            email='tom@gmail.com',
+            password='Testpassword123')
+        medicine2 = Medicine.objects.create(
+            user=user,
+            name='Gripex',
+            description='This is the best pain killer')
+        self.assertEqual(Medicine.objects.all().count(), 2)
+        self.assertEqual(medicine1.name, medicine2.name)
+
+    def test_create_the_same_medicine_for_the_same_user_fails(self):
+        """Test creating the same medicine for the same user based on database constraint
+        must be fails"""
+        Medicine.objects.create(
+            user=self.user,
+            name='Gripex',
+            description='This is the best pain killer')
+        with self.assertRaises(Exception) as raised:
+            Medicine.objects.create(
+                user=self.user,
+                name='Gripex',
+                description='This is the best pain killer')
+        self.assertEqual(IntegrityError, type(raised.exception))
