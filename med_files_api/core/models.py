@@ -3,6 +3,7 @@ from django.db import models
 
 
 class UserManager(BaseUserManager):
+    """Class with helper function to create user and superuser"""
 
     def create_user(self, email, password=None, **extra_fields):
         """Creates and saves a new custom user"""

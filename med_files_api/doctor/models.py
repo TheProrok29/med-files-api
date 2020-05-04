@@ -4,7 +4,8 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Doctor(models.Model):
-    """"Model using to store medical examination result object"""
+    """"Model using to store Doctor object with internal DoctorSpecialization
+    class for specialziation char choices field"""
     class DoctorSpecialization(models.TextChoices):
         UROLOGIS = 'URO', _('Urologis')
         ORTHOPEDIST = 'ORT', _('Orthopedist')

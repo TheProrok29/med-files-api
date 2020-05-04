@@ -5,6 +5,7 @@ from .serializers import MedicineSerializer
 
 
 class MedicineViewSet(viewsets.ModelViewSet):
+    """"CRUD options for Medicine for authenticated user"""
     serializer_class = MedicineSerializer
     queryset = Medicine.objects.all()
     authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)

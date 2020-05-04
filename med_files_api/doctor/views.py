@@ -15,5 +15,5 @@ class DoctorViewSet(viewsets.ModelViewSet):
         return self.queryset.filter(user=self.request.user)
 
     def perform_create(self, serializer):
+        """Auto add current user to serializer user field"""
         serializer.save(user=self.request.user)
-
