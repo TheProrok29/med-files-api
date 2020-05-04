@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 from django.contrib.auth import get_user_model
 from ..models import Medicine
+from ..serializers import MedicineSerializer
 
 
 MEDICINE_URL = reverse('api:medicine-list')
@@ -29,6 +30,16 @@ class PrivateMedicineApiTest(APITestCase):
         self.user = get_user_model().objects.create_user('prorsok29@vp.pl', 'testpasswd')
         self.client.force_authenticate(self.user)
         self.new_medicine = Medicine.objects.create(user=self.user, name='Postin')
+
+    def test_retrieve_medicines(self):
+        """Test retrieving medicines"""
+        Medicine.objects.create(user=self.user, name='Alkamenkun')
+        Medicine.objects.create(user=self.user, name='Dioxin')
+        res = self.client.get(MEDICINE_URL)
+        medicines = Medicine.objects.all()
+        serializer = MedicineSerializer(medicines, many=True)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data, serializer.data)
 
     def test_create_medicine_with_full_data_success(self):
         """Test createing medicine with valid payload is successful"""
@@ -115,3 +126,15 @@ class PrivateMedicineApiTest(APITestCase):
         self.new_medicine.refresh_from_db()
         self.assertEqual(self.new_medicine.description, payload['description'])
         self.assertEqual(self.new_medicine.med_form, payload['med_form'])
+
+    def test_create_the_same_medicine_for_different_user_success(self):
+        """Test creating the same medicine for different user must be success"""
+        Medicine.objects.create(user=self.user, name='Makumba')
+        new_user = get_user_model().objects.create_user('kalika@gmail.com', 'tesrfgtpasswd')
+        payload = {
+            'user': new_user,
+            'name': 'Makumba'
+        }
+        self.client.force_authenticate(new_user)
+        res = self.client.post(MEDICINE_URL, payload)
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)

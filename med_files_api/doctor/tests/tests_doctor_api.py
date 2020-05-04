@@ -49,7 +49,7 @@ class PrivateDoctorApiTest(APITestCase):
             specialization=Doctor.DoctorSpecialization.SURGEON
         )
         res = self.client.get(DOCTOR_URL)
-        doctors = Doctor.objects.all().order_by('-name')
+        doctors = Doctor.objects.all()
         serializer = DoctorSerializer(doctors, many=True)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)
@@ -134,3 +134,15 @@ class PrivateDoctorApiTest(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.new_doctor.refresh_from_db()
         self.assertEqual(self.new_doctor.phone_number, payload['phone_number'])
+
+    def test_create_the_same_doctor_for_dfferent_user_success(self):
+        """Test creating the same doctor for different user must be success"""
+        Doctor.objects.create(user=self.user, name='Fakren Makrewn')
+        new_user = get_user_model().objects.create_user('kalika@gmail.com', 'tesrfgtpasswd')
+        payload = {
+            'user': new_user,
+            'name': 'Fakren Makrewn'
+        }
+        self.client.force_authenticate(new_user)
+        res = self.client.post(DOCTOR_URL, payload)
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
