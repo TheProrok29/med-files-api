@@ -15,19 +15,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers
+from django.conf.urls.static import static
+from django.conf import settings
 from doctor.views import DoctorViewSet
 from medicine.views import MedicineViewSet
 from user.views import CreateUserView
 from med_result.views import MedResultViewSet
-from rest_framework import routers
-from django.conf.urls.static import static
-from django.conf import settings
+from core.views import TagViewSet
+
 
 router = routers.DefaultRouter()
 router.register(r'medicine', MedicineViewSet, 'medicine')
 router.register(r'doctor', DoctorViewSet, 'doctor')
 router.register(r'user', CreateUserView, 'user')
 router.register(r'med_result', MedResultViewSet, 'med_result')
+router.register(r'tag', TagViewSet, 'tag')
 
 
 urlpatterns = [
