@@ -5,12 +5,11 @@ from .serializers import TagSerializer
 from .models import Tag
 
 
-class TagViewSet(viewsets.ModelViewSet):
-    """Manage tags in the database"""
+class BaseMedFilesViewSet(viewsets.ModelViewSet):
+    """Base class for other views in the project permissions
+    and authentication"""
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
-    queryset = Tag.objects.all()
-    serializer_class = TagSerializer
 
     def get_queryset(self):
         """Return objects for the current autheniotcated user only"""
@@ -19,3 +18,9 @@ class TagViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         """Automatically add the user to the new tag"""
         serializer.save(user=self.request.user)
+
+
+class TagViewSet(BaseMedFilesViewSet):
+    """Manage tags in the database"""
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
