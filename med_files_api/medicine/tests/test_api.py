@@ -36,7 +36,7 @@ class PrivateMedicineApiTest(APITestCase):
         Medicine.objects.create(user=self.user, name='Alkamenkun')
         Medicine.objects.create(user=self.user, name='Dioxin')
         res = self.client.get(MEDICINE_URL)
-        medicines = Medicine.objects.all()
+        medicines = Medicine.objects.all().order_by('-name')
         serializer = MedicineSerializer(medicines, many=True)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)

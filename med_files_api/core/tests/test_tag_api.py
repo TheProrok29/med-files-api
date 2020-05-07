@@ -69,12 +69,13 @@ class PrivateTagApiTests(APITestCase):
         res = self.client.post(TAG_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_chage_tag(self):
+    def test_update_tag(self):
         """Test updating existing tag"""
         tag = Tag.objects.create(user=self.user, name='Right Leg')
         payload = {'name': 'Left Leg'}
         res1 = self.client.get(get_tag_detail_url(tag))
         res2 = self.client.patch(get_tag_detail_url(tag), payload)
+        tag.refresh_from_db()
         self.assertEqual(res1.data['name'], 'Right Leg')
         self.assertEqual(res2.status_code, status.HTTP_200_OK)
         self.assertEqual(res2.data['name'], payload['name'])

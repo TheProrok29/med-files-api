@@ -5,7 +5,7 @@ from .serializers import TagSerializer
 from .models import Tag
 
 
-class BaseMedFilesViewSet(viewsets.ModelViewSet):
+class BaseMedFileViewSet(viewsets.ModelViewSet):
     """Base class for other views in the project permissions
     and authentication"""
     authentication_classes = (TokenAuthentication,)
@@ -20,7 +20,7 @@ class BaseMedFilesViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
 
-class TagViewSet(BaseMedFilesViewSet):
+class TagViewSet(BaseMedFileViewSet):
     """Manage tags in the database"""
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
