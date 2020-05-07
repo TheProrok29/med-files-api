@@ -9,6 +9,11 @@ from ..serializers import TagSerializer
 TAG_URL = reverse('api:tag-list')
 
 
+def get_tag_detail_url(tag):
+    """Return detail url for tag instance passed as a parametr"""
+    return reverse('api:tag-detail', kwargs={'pk': tag.pk})
+
+
 class PublicTagApiTests(APITestCase):
     """Test the publicly avaialble tags API"""
 
@@ -63,3 +68,20 @@ class PrivateTagApiTests(APITestCase):
         payload = {'name': ''}
         res = self.client.post(TAG_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_chage_tag(self):
+        """Test updating existing tag"""
+        tag = Tag.objects.create(user=self.user, name='Right Leg')
+        payload = {'name': 'Left Leg'}
+        res1 = self.client.get(get_tag_detail_url(tag))
+        res2 = self.client.patch(get_tag_detail_url(tag), payload)
+        self.assertEqual(res1.data['name'], 'Right Leg')
+        self.assertEqual(res2.status_code, status.HTTP_200_OK)
+        self.assertEqual(res2.data['name'], payload['name'])
+
+    def test_delete_tag(self):
+        """Test deleting existing tag"""
+        tag = Tag.objects.create(user=self.user, name='Right Leg')
+        res = self.client.delete(get_tag_detail_url(tag))
+        self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(Tag.objects.all().count(), 0)
