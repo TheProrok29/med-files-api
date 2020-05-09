@@ -10,7 +10,7 @@ class MedResultSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MedResult
-        fields = ('id', 'user', 'name', 'description', 'add_date', 'date_of_exam', 'image', 'tag')
+        fields = ('id', 'name', 'description', 'add_date', 'date_of_exam', 'image', 'tag')
         read_only_fields = ('image',)
 
 
