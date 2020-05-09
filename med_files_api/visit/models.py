@@ -11,12 +11,12 @@ class Visit(models.Model):
     most of the other modules"""
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    visit_date = models.DateField(blank=True)
+    visit_date = models.DateField(blank=True, null=True)
     name = models.CharField(verbose_name='Name', max_length=200)
     adres = models.CharField(verbose_name='Adres', max_length=200, blank=True, null=True)
     doctor = models.ForeignKey(Doctor, null=True, on_delete=models.SET_NULL)
-    medicine = models.ForeignKey(Medicine, blank=True, null=True, on_delete=models.SET_NULL)
-    med_result = models.ForeignKey(MedResult, blank=True, null=True, on_delete=models.SET_NULL)
+    medicine = models.ManyToManyField(Medicine, blank=True)
+    med_result = models.ManyToManyField(MedResult, blank=True)
     tag = models.ManyToManyField(Tag, blank=True)
 
     def __str__(self):
