@@ -4,34 +4,34 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.utils import timezone
 
-from ..models import MedResult, exam_result_file_path
+from ..models import MedResult, med_result_file_path
 
 
-class MedicalExaminationResultModelTest(TestCase):
+class MedResultModelTest(TestCase):
 
-    def test_create_exam_result(self):
-        """Test creating a new exam  result"""
-        med_exam_result = MedResult.objects.create(
+    def test_create_med_result(self):
+        """Test creating a new med result"""
+        med_result = MedResult.objects.create(
             user=get_user_model().objects.create_user(email='prorowk29@vp.pl', password='pa$$w0rd'),
-            description='Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum',
+            name='Lorem Ipsum',
             date_of_exam=timezone.now())
-        self.assertTrue(isinstance(med_exam_result, MedResult))
-        self.assertEqual(med_exam_result.__str__(), med_exam_result.description[:100])
+        self.assertTrue(isinstance(med_result, MedResult))
+        self.assertEqual(med_result.__str__(), med_result.name)
 
-    def test_med_exam_result_str(self):
-        """Test medical examination result string representation"""
-        med_exam_result = MedResult.objects.create(
+    def test_med_result_str(self):
+        """Test medical result string representation"""
+        med_result = MedResult.objects.create(
             user=get_user_model().objects.create_user(email='prorowk29@vp.pl', password='pa$$w0rd'),
-            description='Lorem Ipsum is simply dummy text of thddecc printing and typesetting industry. Lorem Ipsum',
+            name='Lorem Ipsum',
             date_of_exam=timezone.now())
-        self.assertEqual(str(med_exam_result), med_exam_result.description)
+        self.assertEqual(str(med_result), med_result.name)
 
     @patch('uuid.uuid4')
-    def test_exam_result_file_name_uuid(self, mock_uuid):
+    def test_result_file_name_uuid(self, mock_uuid):
         """Test that image is saved in the correct location"""
         uuid = 'test-uuid'
         mock_uuid.return_value = uuid
-        file_path = exam_result_file_path(None, 'myimage.jpg')
+        file_path = med_result_file_path(None, 'myimage.jpg')
 
         exp_path = f'uploads/med_result/{uuid}.jpg'
         self.assertEqual(file_path, exp_path)
