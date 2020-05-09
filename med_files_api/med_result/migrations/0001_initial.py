@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('description', models.TextField(verbose_name='Description')),
                 ('add_date', models.DateTimeField(auto_now_add=True)),
                 ('date_of_exam', models.DateTimeField()),
-                ('image', models.ImageField(blank=True, null=True, upload_to=med_result.models.exam_result_file_path)),
+                ('image', models.ImageField(blank=True, null=True, upload_to=med_result.models.med_result_file_path)),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
