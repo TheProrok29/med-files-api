@@ -11,8 +11,8 @@ class Visit(models.Model):
     most of the other modules"""
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    visit_date = models.DateTimeField()
-    name = models.CharField(verbose_name='Name', max_length=200, blank=True, null=True)
+    visit_date = models.DateField(blank=True)
+    name = models.CharField(verbose_name='Name', max_length=200)
     adres = models.CharField(verbose_name='Adres', max_length=200, blank=True, null=True)
     doctor = models.ForeignKey(Doctor, null=True, on_delete=models.SET_NULL)
     medicine = models.ForeignKey(Medicine, blank=True, null=True, on_delete=models.SET_NULL)
