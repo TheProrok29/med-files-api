@@ -21,9 +21,9 @@ class VisitSerializer(serializers.ModelSerializer):
         read_only=True, default=serializers.CurrentUserDefault())
 
     doctor = UserFilteredPrimaryKeyRelatedField(queryset=Doctor.objects)
-    medicine = serializers.PrimaryKeyRelatedField(many=True, queryset=Medicine.objects.all())
-    med_result = serializers.PrimaryKeyRelatedField(many=True, queryset=MedResult.objects.all())
-    tag = serializers.PrimaryKeyRelatedField(many=True, queryset=Tag.objects.all())
+    medicine = UserFilteredPrimaryKeyRelatedField(many=True, queryset=Medicine.objects)
+    med_result = UserFilteredPrimaryKeyRelatedField(many=True, queryset=MedResult.objects)
+    tag = UserFilteredPrimaryKeyRelatedField(many=True, queryset=Tag.objects)
 
     class Meta:
         model = Visit
