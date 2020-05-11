@@ -1,18 +1,12 @@
 Welcome to MedFiles API's documentation!
 ========================================
 
-.. rubric:: Everything you need to know about MedFiles API.
+.. toctree::
+    :maxdepth: 2
+    :caption: Basics
 
-.. _index-first-steps:
+    introduction
 
-First steps
-===========
-
-Are you new to Django or to programming? This is the place to start!
-
-
-* **From scratch:**
-  :doc:`Overview <modules/views>`
 
 Indices and tables
 ==================

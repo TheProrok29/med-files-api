@@ -16,7 +16,7 @@ import django
 import sphinx_rtd_theme
 
 # sys.path.insert(0, os.path.abspath('../med-files-api/'))
-sys.path.append('/home/tom/Projekty/med-files-api/med_files_api/')
+sys.path.insert(0, os.path.abspath('../../med_files_api/'))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'med_files_api.settings'
 django.setup()
 
@@ -29,6 +29,7 @@ author = 'Tomasz Bogacki'
 # The full version, including alpha/beta/rc tags
 release = '0.5'
 
+master_doc = 'index'
 
 # -- General configuration ---------------------------------------------------
 
