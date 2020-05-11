@@ -1,5 +1,19 @@
 
-[![Build Status](https://travis-ci.org/TheProrok29/med-files-api.svg?branch=master)](https://travis-ci.org/TheProrok29/med-files-api) [![codecov](https://codecov.io/gh/TheProrok29/med-files-api/branch/master/graph/badge.svg)](https://codecov.io/gh/TheProrok29/med-files-api) ![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/TheProrok29/med-files-api/master?color=yellow) [![Known Vulnerabilities](https://snyk.io/test/github/TheProrok29/med-files-api/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/TheProrok29/med-files-api?targetFile=requirements.txt) ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/TheProrok29/med-files-api?color=blueviolet) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+.. image:: https://travis-ci.org/TheProrok29/med-files-api.svg?branch=master
+    :target: https://travis-ci.org/TheProrok29/med-files-api
+
+.. image:: https://codecov.io/gh/TheProrok29/med-files-api/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/TheProrok29/med-files-api
+
+.. image:: https://snyk.io/test/github/TheProrok29/med-files-api/badge.svg?targetFile=requirements.txt
+    :target: https://snyk.io/test/github/TheProrok29/med-files-api?targetFile=requirements.txt
+
+.. image:: https://img.shields.io/badge/License-MIT-blue.svg
+    :target: https://opensource.org/licenses/MIT
+
+
+ ![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/TheProrok29/med-files-api/master?color=yellow)
+ ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/TheProrok29/med-files-api?color=blueviolet)
 
 
 MedFiles API is REST implementation of `Django <https://www.djangoproject.com/>` system to collect personal medical data. MedFilesAPI provides a set of `Django Rest Framework <https://www.django-rest-framework.org/>`_ views to handle basic actions such as registration, login, doctor, medicine, med_result and more. It works with `custom user model <https://docs.djangoproject.com/en/dev/topics/auth/customizing/>`_.
