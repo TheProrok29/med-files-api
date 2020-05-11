@@ -24,7 +24,7 @@ class Doctor(models.Model):
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(verbose_name='Name', max_length=120)
-    adres = models.CharField(verbose_name='Adres', max_length=200, blank=True, null=True)
+    address = models.CharField(verbose_name='Adres', max_length=200, blank=True, null=True)
     phone_number = models.CharField(
         verbose_name='Phone Number', max_length=12, blank=True, null=True)
     specialization = models.CharField(

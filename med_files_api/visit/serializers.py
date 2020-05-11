@@ -27,4 +27,4 @@ class VisitSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Visit
-        fields = ('id', 'user', 'name', 'visit_date', 'adres', 'doctor', 'medicine', 'med_result', 'tag')
+        fields = ('id', 'user', 'name', 'visit_date', 'address', 'doctor', 'medicine', 'med_result', 'tag')

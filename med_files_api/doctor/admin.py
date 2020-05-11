@@ -5,7 +5,7 @@ from .models import Doctor
 
 class DoctorAdmin(admin.ModelAdmin):
     ordering = ['id']
-    list_display = ['name', 'adres', 'phone_number', 'specialization']
+    list_display = ['name', 'address', 'phone_number', 'specialization']
     search_fields = ('name',)
 
 
