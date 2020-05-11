@@ -9,14 +9,13 @@
     :target: https://snyk.io/test/github/TheProrok29/med-files-api?targetFile=requirements.txt
 
 .. image:: https://img.shields.io/badge/License-MIT-blue.svg
-    :target: https://opensource.org/licenses/MIT
+   :target: https://lbesson.mit-license.org/
+
+.. image:: https://img.shields.io/codefactor/grade/github/TheProrok29/med-files-api/master?color=yellow   :alt: CodeFactor Grade
 
 
- ![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/TheProrok29/med-files-api/master?color=yellow)
- ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/TheProrok29/med-files-api?color=blueviolet)
 
-
-MedFiles API is REST implementation of `Django <https://www.djangoproject.com/>` system to collect personal medical data. MedFilesAPI provides a set of `Django Rest Framework <https://www.django-rest-framework.org/>`_ views to handle basic actions such as registration, login, doctor, medicine, med_result and more. It works with `custom user model <https://docs.djangoproject.com/en/dev/topics/auth/customizing/>`_.
+MedFiles API is REST implementation of `Django <https://www.djangoproject.com/>`_ system to collect personal medical data. MedFilesAPI provides a set of `Django Rest Framework <https://www.django-rest-framework.org/>`_ views to handle basic actions such as registration, login, doctor, medicine, med_result and more. It works with `custom user model <https://docs.djangoproject.com/en/dev/topics/auth/customizing/>`_.
 
 Developed by Tomasz Bogacki.
 
