@@ -8,6 +8,10 @@
 .. image:: https://snyk.io/test/github/TheProrok29/med-files-api/badge.svg?targetFile=requirements.txt
     :target: https://snyk.io/test/github/TheProrok29/med-files-api?targetFile=requirements.txt
 
+.. image:: https://readthedocs.org/projects/med-files-api/badge/?version=latest
+    :target: https://med-files-api.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
+
 .. image:: https://img.shields.io/badge/License-MIT-blue.svg
    :target: https://lbesson.mit-license.org/
 
@@ -57,4 +61,6 @@ Simply using:
 Documentation
 =============
 
-Documentation is under development and partially available to study at ``docs`` directory.
+Documentation is under development and partially available to study at
+`Read the Docs <https://med-files-api.readthedocs.io/en/latest/>`_
+and in ``docs`` directory.
