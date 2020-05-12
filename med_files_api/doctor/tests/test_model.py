@@ -15,7 +15,7 @@ class DoctorModelTest(TestCase):
         """Test creating a new doctor with all field filled"""
         doctor = Doctor.objects.create(user=self.user,
                                        name='Tom Hardy',
-                                       adres='Warsaw, Chrobrego 25/4a',
+                                       address='Warsaw, Chrobrego 25/4a',
                                        phone_number='765789432',
                                        specialization=Doctor.DoctorSpecialization.SURGEON)
         self.assertTrue(isinstance(doctor, Doctor))

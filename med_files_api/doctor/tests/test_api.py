@@ -32,7 +32,7 @@ class PrivateDoctorApiTest(APITestCase):
         self.new_doctor = Doctor.objects.create(
             user=self.user,
             name='Oleg Faustin',
-            adres='Warsaw 25/b',
+            address='Warsaw 25/b',
             phone_number='478789086',
             specialization=Doctor.DoctorSpecialization.ALLERGIST)
 
@@ -58,7 +58,7 @@ class PrivateDoctorApiTest(APITestCase):
         """Test createing doctor with valid payload is successful"""
         payload = {
             'name': 'Fakren Makrewn',
-            'adres': 'Opole 24/b',
+            'address': 'Opole 24/b',
             'phone_number': '456789086',
             'specialization': Doctor.DoctorSpecialization.NEUROLOGIST
         }
@@ -83,7 +83,7 @@ class PrivateDoctorApiTest(APITestCase):
         payload = {
             'user': self.user,
             'name': 'Oleg Faustin',
-            'adres': 'Opole 24/b',
+            'address': 'Opole 24/b',
             'phone_number': '456789086',
             'specialization': Doctor.DoctorSpecialization.ALLERGIST
         }
@@ -110,7 +110,7 @@ class PrivateDoctorApiTest(APITestCase):
         """"Test creating doctor with broken payload(specialziation) must fail"""
         payload = {
             'name': 'Fakren Makrewn',
-            'adres': 'Opole 24/b',
+            'address': 'Opole 24/b',
             'phone_number': '456789086',
             'specialization': 'Something',
         }
@@ -126,7 +126,7 @@ class PrivateDoctorApiTest(APITestCase):
         """Test update existing doctor"""
         payload = {
             'name': 'Fakren Makrewn',
-            'adres': 'Warsaw 24/b',
+            'address': 'Warsaw 24/b',
             'phone_number': '987654321',
             'specialization': Doctor.DoctorSpecialization.ORTHOPEDIST,
         }
