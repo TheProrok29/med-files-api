@@ -24,6 +24,8 @@ from user.views import CreateUserView
 from med_result.views import MedResultViewSet
 from core.views import TagViewSet
 from visit.views import VisitViewSet
+from rest_framework.documentation import include_docs_urls
+
 
 router = routers.DefaultRouter()
 router.register(r'medicine', MedicineViewSet, 'medicine')
@@ -38,4 +40,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include((router.urls, 'api'), namespace='api')),
     path('api/user/', include('user.urls')),
+    path('api/docs/', include_docs_urls(title='MedFiles API'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

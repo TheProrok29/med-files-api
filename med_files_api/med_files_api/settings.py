@@ -67,6 +67,9 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'med_files_api.urls'
 
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
+}
 
 TEMPLATES = [
     {
