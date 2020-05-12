@@ -58,7 +58,7 @@ class AdminSiteDoctorTests(TestCase):
         self.client.force_login(self.admin_user)
         self.doctor = Doctor.objects.create(user=self.admin_user,
                                             name='Tom Hardy',
-                                            adres='Warsaw, Chrobrego 25/4a',
+                                            address='Warsaw, Chrobrego 25/4a',
                                             phone_number='765789432',
                                             specialization=Doctor.DoctorSpecialization.GYNECALOGIST)
 
@@ -68,7 +68,7 @@ class AdminSiteDoctorTests(TestCase):
         res = self.client.get(url)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertContains(res, self.doctor.name)
-        self.assertContains(res, self.doctor.adres)
+        self.assertContains(res, self.doctor.address)
 
     def test_doctor_change_page(self):
         """Test that the doctor edit page works"""
