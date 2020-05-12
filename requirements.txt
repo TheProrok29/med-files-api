@@ -1,5 +1,6 @@
 asgiref==3.2.7
 certifi==2019.11.28
+coreapi==2.3.3
 chardet==3.0.4
 codecov==2.0.22
 coverage==5.0.4
