@@ -63,4 +63,4 @@ Documentation
 
 Documentation is under development and partially available to study at
 `Read the Docs <https://med-files-api.readthedocs.io/en/latest/>`_
-and in ``docs`` directory.
+``api/docs/`` endpoint after run application and ``docs`` directory.
