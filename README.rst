@@ -26,24 +26,34 @@ Developed by Tomasz Bogacki.
 Requirements
 ============
 
-To be able to run **MedFilesAPI** you have to meet following requirements:
+To be able to run **MedFilesAPI** you have to minimum meet following requirements:
 
 - Python (3.6, 3.7, 3.8)
 - Django (1.11, 2.2, 3.0)
 - Django REST Framework (3.10, 3.11)
-- idna==2.9
-- Psycopg2-binary==2.8.5
-- Pytz==2019.3
-- Requests==2.23.0
-- Sqlparse==0.3.1
-- Urllib3==1.25.8
-- Python-decouple==3.3
 - Asgiref==3.2.7
 - Certifi==2019.11.28
 - Chardet==3.0.4
+- Coreapi==2.3.3
+- Coreschema==0.0.4
+- Django-cors-headers==3.2.1
+- Idna==2.9
+- Itypes==1.2.0
+- Jinja2==2.11.2
+- MarkupSafe==1.1.1
+- Pillow==7.1.2
+- Python-decouple==3.3
+- Pytz==2019.3
+- Requests==2.23.0
+- Sqlparse==0.3.1
+- Uritemplate==3.0.1
+- Urllib3==1.25.8
 
 Probably on other versions of the dependency APP will also run, but I have not tested it.
-All depedency is in requirements.txt file, recomended way to install is is using python virtual environment like venv or virtualenv using pip install -r requirements inside virtual environment.
+All depedencys are in requirements.txt file, recomended way to install is is using python virtual environment like venv or virtualenv using pip install -r requirements.txt inside virtual environment.
+
+Optional depedencys for development purpose are in requirements-dev.txt. For example to run codecov, coverage, git pre-commit hooks, Sphinx and more.
+
 
 Installation and/or Contributing and development
 ============
@@ -63,4 +73,4 @@ Documentation
 
 Documentation is under development and partially available to study at
 `Read the Docs <https://med-files-api.readthedocs.io/en/latest/>`_
-``api/docs/`` endpoint after run application and ``docs`` directory.
+, also ``api/docs/`` endpoint after run application and ``docs`` directory.
