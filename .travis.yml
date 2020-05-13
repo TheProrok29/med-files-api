@@ -5,6 +5,7 @@ python:
   - "nightly"
 install:
   - "pip install -r requirements.txt"
+  - "pip install -r requirements-dev.txt"
 script:
   - cd med_files_api && flake8 cmdbox
   - coverage run manage.py test
