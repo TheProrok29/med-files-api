@@ -45,12 +45,12 @@ class VisitModelTest(TestCase):
         """Test creating visit using broken data, based on database constraint
         must be fails"""
         with self.assertRaises(Exception) as raised1:
-            visit = Visit.objects.create(user=self.user,
-                                         name='Wizyta Urologiczna',
-                                         doctor='Pan Jan')
+            Visit.objects.create(user=self.user,
+                                 name='Wizyta Urologiczna',
+                                 doctor='Pan Jan')
         with self.assertRaises(Exception) as raised2:
-            visit = Visit.objects.create(user=self.user,
-                                         name=None,
-                                         doctor=self.doctor)
+            Visit.objects.create(user=self.user,
+                                 name=None,
+                                 doctor=self.doctor)
         self.assertEqual(ValueError, type(raised1.exception))
         self.assertEqual(IntegrityError, type(raised2.exception))
