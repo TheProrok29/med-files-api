@@ -44,7 +44,6 @@ class PrivateMedicineApiTest(APITestCase):
     def test_create_medicine_with_full_data_success(self):
         """Test createing medicine with valid payload is successful"""
         payload = {
-            'user': self.user,
             'name': 'Gripex',
             'description': 'This is the best pain killer',
             'med_form': Medicine.MedicineForm.GLOBULES,
@@ -58,7 +57,6 @@ class PrivateMedicineApiTest(APITestCase):
     def test_create_medicine_with_min_data_success(self):
         """Test createing medicine with valid min payload is successful"""
         payload = {
-            'user': self.user,
             'name': 'Apap',
         }
         res = self.client.post(MEDICINE_URL, payload)
@@ -69,7 +67,6 @@ class PrivateMedicineApiTest(APITestCase):
     def test_medicine_exists(self):
         """Test creating medicine that already exists fails"""
         payload = {
-            'user': self.user,
             'name': 'Finx',
         }
         Medicine.objects.create(user=self.user,
@@ -80,7 +77,6 @@ class PrivateMedicineApiTest(APITestCase):
     def test_create_medicine_invalid_med_form_fail(self):
         """"Test creating medicine with broken payload(med_form) must fail"""
         payload = {
-            'user': self.user,
             'name': 'New one',
             'description': 'This is the best pain killer',
             'med_form': 'Something',
@@ -91,7 +87,6 @@ class PrivateMedicineApiTest(APITestCase):
     def test_create_medicine_invalid_med_type_fail(self):
         """Test creating medicine with broken payload(med_type) must fail"""
         payload = {
-            'user': self.user,
             'name': 'New one',
             'description': 'This is the best pain killer',
             'med_type': 'Something',
