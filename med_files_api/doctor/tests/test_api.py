@@ -81,7 +81,6 @@ class PrivateDoctorApiTest(APITestCase):
     def test_doctor_exists(self):
         """Test creating doctor that already exists fails"""
         payload = {
-            'user': self.user,
             'name': 'Oleg Faustin',
             'address': 'Opole 24/b',
             'phone_number': '456789086',
