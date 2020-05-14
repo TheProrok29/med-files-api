@@ -34,23 +34,9 @@ To be able to run **MedFilesAPI** you have to minimum meet following requirement
 - Python (3.6, 3.7, 3.8)
 - Django (1.11, 2.2, 3.0)
 - Django REST Framework (3.10, 3.11)
-- Asgiref==3.2.7
-- Certifi==2019.11.28
-- Chardet==3.0.4
 - Coreapi==2.3.3
-- Coreschema==0.0.4
-- Django-cors-headers==3.2.1
-- Idna==2.9
-- Itypes==1.2.0
-- Jinja2==2.11.2
-- MarkupSafe==1.1.1
 - Pillow==7.1.2
 - Python-decouple==3.3
-- Pytz==2019.3
-- Requests==2.23.0
-- Sqlparse==0.3.1
-- Uritemplate==3.0.1
-- Urllib3==1.25.8
 
 Probably on other versions of the dependency APP will also run, but I have not tested it.
 All depedencys are in requirements.txt file, recomended way to install it is using python virtual environment
