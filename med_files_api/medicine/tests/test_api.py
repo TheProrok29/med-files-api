@@ -55,7 +55,7 @@ class PrivateMedicineApiTest(APITestCase):
         self.assertTrue(medicine.name, payload['name'])
 
     def test_create_medicine_with_min_data_success(self):
-        """Test createing medicine with valid min payload is successful"""
+        """Test creating medicine with valid min payload is successful"""
         payload = {
             'name': 'Apap',
         }
