@@ -7,7 +7,7 @@ class Doctor(models.Model):
     """"Model using to store Doctor object with internal DoctorSpecialization
     class for specialziation char choices field"""
     class DoctorSpecialization(models.TextChoices):
-        UROLOGIS = 'URO', _('Urologis')
+        UROLOGIST = 'URO', _('Urologist')
         ORTHOPEDIST = 'ORT', _('Orthopedist')
         OPHTHALMOLOGIST = 'OPH', _('Ophthalmologist')
         NEUROLOGIST = 'NEU', _('Neurologist')
