@@ -1,6 +1,6 @@
 from rest_framework import serializers
-
-from .models import MedResult
+from visit.serializers import UserFilteredPrimaryKeyRelatedField
+from .models import MedResult, MedImage
 from core.models import Tag
 
 
@@ -10,13 +10,14 @@ class MedResultSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MedResult
-        fields = ('id', 'name', 'description', 'add_date', 'date_of_exam', 'image', 'tag')
-        read_only_fields = ('image',)
+        fields = ('id', 'name', 'description', 'add_date', 'date_of_exam', 'tag')
+        read_only_fields = ('id',)
 
 
 class MedResultImageSerializer(serializers.ModelSerializer):
     """Serializer for uploading images to med results"""
+    med_result = UserFilteredPrimaryKeyRelatedField(queryset=MedResult.objects)
+
     class Meta:
-        model = MedResult
-        fields = ('id', 'image')
-        read_only_fields = ('id',)
+        model = MedImage
+        fields = ('id', 'name', 'image', 'med_result')
