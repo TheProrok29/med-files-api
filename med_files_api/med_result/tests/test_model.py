@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.utils import timezone
 
-from ..models import MedResult, med_result_file_path
+from ..models import MedResult, MedImage, med_result_file_path
 
 
 class MedResultModelTest(TestCase):
@@ -25,6 +25,15 @@ class MedResultModelTest(TestCase):
             name='Lorem Ipsum',
             date_of_exam=timezone.now())
         self.assertEqual(str(med_result), med_result.name)
+
+
+class MedResultImageModelTest(TestCase):
+    def test_med_result_str(self):
+        """Test medical result image string representation"""
+        med_image = MedImage.objects.create(
+            user=get_user_model().objects.create_user(email='prorowk29@vp.pl', password='pa$$w0rd'),
+            name='Lorem Ipsum')
+        self.assertEqual(str(med_image), med_image.name)
 
     @patch('uuid.uuid4')
     def test_result_file_name_uuid(self, mock_uuid):
