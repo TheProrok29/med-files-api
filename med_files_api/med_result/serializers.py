@@ -7,10 +7,11 @@ from core.models import Tag
 class MedResultSerializer(serializers.ModelSerializer):
     """Serializer a med result detail"""
     tag = serializers.PrimaryKeyRelatedField(many=True, queryset=Tag.objects.all())
+    images = serializers.HyperlinkedIdentityField(many=True, read_only=True, view_name='api:med_image-detail')
 
     class Meta:
         model = MedResult
-        fields = ('id', 'name', 'description', 'add_date', 'date_of_exam', 'tag')
+        fields = ('id', 'name', 'description', 'add_date', 'date_of_exam', 'images', 'tag')
         read_only_fields = ('id',)
 
 
