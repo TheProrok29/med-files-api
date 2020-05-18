@@ -10,7 +10,8 @@ class MedResultAdmin(admin.ModelAdmin):
     search_fields = ('name', 'user')
 
     def med_image(self, obj):
-        return MedImage.objects.filter(med_result=obj)
+        med_result = MedResult.objects.get(id=obj.id)
+        return med_result.images.all()
 
 
 admin.site.register(MedResult, MedResultAdmin)
