@@ -21,7 +21,7 @@ from django.conf import settings
 from doctor.views import DoctorViewSet
 from medicine.views import MedicineViewSet
 from user.views import CreateUserView
-from med_result.views import MedResultViewSet, MedResultImageViewSet
+from med_result.views import MedResultViewSet, MedImageViewSet
 from core.views import TagViewSet
 from visit.views import VisitViewSet
 from rest_framework.documentation import include_docs_urls
@@ -34,7 +34,7 @@ router.register(r'user', CreateUserView, 'user')
 router.register(r'med_result', MedResultViewSet, 'med_result')
 router.register(r'tag', TagViewSet, 'tag')
 router.register(r'visit', VisitViewSet, 'visit')
-router.register(r'med_image', MedResultImageViewSet, 'med_image')
+router.register(r'med_image', MedImageViewSet, 'med_image')
 
 
 urlpatterns = [

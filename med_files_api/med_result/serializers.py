@@ -15,7 +15,7 @@ class MedResultSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
 
-class MedResultImageSerializer(serializers.ModelSerializer):
+class MedImageSerializer(serializers.ModelSerializer):
     """Serializer for uploading images to med results"""
     med_result = UserFilteredPrimaryKeyRelatedField(queryset=MedResult.objects)
 

@@ -1,5 +1,5 @@
 from .models import MedResult, MedImage
-from .serializers import MedResultSerializer, MedResultImageSerializer
+from .serializers import MedResultSerializer, MedImageSerializer
 from core.views import BaseMedFileViewSet
 
 
@@ -8,6 +8,6 @@ class MedResultViewSet(BaseMedFileViewSet):
     queryset = MedResult.objects.all()
 
 
-class MedResultImageViewSet(BaseMedFileViewSet):
-    serializer_class = MedResultImageSerializer
+class MedImageViewSet(BaseMedFileViewSet):
+    serializer_class = MedImageSerializer
     queryset = MedImage.objects.all()
