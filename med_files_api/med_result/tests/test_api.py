@@ -5,9 +5,11 @@ from rest_framework.test import APITestCase
 import tempfile
 from PIL import Image
 from ..models import MedResult, MedImage
+from ..serializers import MedImageSerializer
 
 
 MED_IMAGE_URL = reverse('api:med_image-list')
+MED_RESULT_URL = reverse('api:med_result-list')
 
 
 def sample_med_result(user, **params):
@@ -24,7 +26,18 @@ def image_upload_url():
     return reverse('api:med_image-list')
 
 
-class MedImageUploadTests(APITestCase):
+class PublicMedImageApiTest(APITestCase):
+    """Test the public med_image API endpoint"""
+
+    def test_login_required(self):
+        """Test that login is required to retrieve med_image API endpoint"""
+        res = self.client.get(MED_IMAGE_URL)
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
+
+class PrivateMedImageApiTest(APITestCase):
+    """Test the private med_image API endpoints"""
+
     def setUp(self):
         self.user = get_user_model().objects.create_user('prorsok29@vp.pl', 'testpasswd')
         self.client.force_authenticate(self.user)
@@ -33,6 +46,16 @@ class MedImageUploadTests(APITestCase):
     def tearDown(self):
         med_images = MedImage.objects.all()
         [m.image.delete() for m in med_images]
+
+    def test_retrieve_med_images(self):
+        """Test retrieving med_images"""
+        MedImage.objects.create(user=self.user, name='First')
+        MedImage.objects.create(user=self.user, name='Second')
+        res = self.client.get(MED_IMAGE_URL)
+        med_images = MedImage.objects.all().order_by('-name')
+        serializer = MedImageSerializer(med_images, many=True)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data, serializer.data)
 
     def test_upload_image_to_med_image(self):
         """Test uploading image to med image"""
