@@ -98,6 +98,10 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+# Comment SQLite section and uncomment POSTGRESS section to use postgress database
+# you must add POSTGRES_USER, POSTGRES_PASSWORD and DJANGO_DB_HOST variable to .env file.
+
 #                       POSTGRESS
 # DATABASES = {
 #     'default': {

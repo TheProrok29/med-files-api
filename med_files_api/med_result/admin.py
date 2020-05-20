@@ -10,6 +10,9 @@ class MedResultAdmin(admin.ModelAdmin):
     search_fields = ('name', 'user')
 
     def med_image(self, obj):
+        """
+        Show all med images connected to concrete med result instance in django admin.
+        """
         med_result = MedResult.objects.get(id=obj.id)
         return med_result.images.all()
 

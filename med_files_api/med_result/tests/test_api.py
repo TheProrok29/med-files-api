@@ -16,7 +16,9 @@ MED_RESULT_URL = reverse('api:med_result-list')
 
 
 def sample_med_result(user, **params):
-    """Create and return a sample med result"""
+    """
+    Create and return a sample med result.
+    """
     defaults = {
         'name': 'Lorem ipsum',
     }
@@ -25,26 +27,33 @@ def sample_med_result(user, **params):
 
 
 def get_med_image_detail_url(med_image):
-    """Return detail url for med_image instance passed as a parametr"""
+    """
+    Return detail url for med image instance passed as a parametr.
+    """
     return reverse('api:med_image-detail', kwargs={'pk': med_image.pk})
 
 
 def get_med_result_detail_url(med_result):
-    """Return detail url for med_image instance passed as a parametr"""
+    """
+    Return detail url for med result instance passed as a parametr.
+    """
     return reverse('api:med_result-detail', kwargs={'pk': med_result.pk})
 
 
 class PublicMedImageApiTest(APITestCase):
-    """Test the public med_image API endpoint"""
+    """
+    Test the public med image API.
+    """
 
     def test_login_required(self):
-        """Test that login is required to retrieve med_image API endpoint"""
         res = self.client.get(MED_IMAGE_URL)
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
 class PrivateMedImageApiTest(APITestCase):
-    """Test the private med_image API endpoints"""
+    """
+    Test the private med image API.
+    """
 
     def setUp(self):
         self.user = get_user_model().objects.create_user('prorsok29@vp.pl', 'testpasswd')
@@ -57,7 +66,6 @@ class PrivateMedImageApiTest(APITestCase):
         [m.image.delete() for m in med_images]
 
     def test_retrieve_med_images(self):
-        """Test retrieving med_images"""
         MedImage.objects.create(user=self.user, name='First')
         MedImage.objects.create(user=self.user, name='Second')
         res = self.client.get(MED_IMAGE_URL)
@@ -67,7 +75,6 @@ class PrivateMedImageApiTest(APITestCase):
         self.assertEqual(res.data, serializer.data)
 
     def test_create_med_image_with_full_data_success(self):
-        """Test creating med image with image"""
         with tempfile.NamedTemporaryFile(suffix='.jpg') as ntf:
             img = Image.new('RGB', (10, 10))
             img.save(ntf, format='JPEG')
@@ -78,19 +85,16 @@ class PrivateMedImageApiTest(APITestCase):
         self.assertIn('image', res.data)
 
     def test_create_med_image_without_image_success(self):
-        """Test creating med image withouth image"""
         res = self.client.post(MED_IMAGE_URL, {'name': 'Morfology 1',
                                                'med_result': self.med_result.id}, format='multipart')
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
     def test_upload_image_bad_request_fail(self):
-        """Test uploading an invalid image"""
         res = self.client.post(MED_IMAGE_URL, {'name': 'Morfology 1', 'image': 'xxx',
                                                'med_result': self.med_result.id}, format='multipart')
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_see_only_user_med_images(self):
-        """Show only med images who were created by the logged in user"""
+    def test_med_image_limited_to_user(self):
         MedImage.objects.create(user=self.user, name='Photo 1')
         new_user = get_user_model().objects.create_user('frankbbf@gmail.pl', 'testpasswd')
         MedImage.objects.create(user=new_user, name='Photo 2')
@@ -100,12 +104,10 @@ class PrivateMedImageApiTest(APITestCase):
         self.assertContains(res, 'Photo 2')
 
     def test_delete_med_image(self):
-        """Test deleting existing med _image"""
         res = self.client.delete(get_med_image_detail_url(self.med_image))
         self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_update_med_image(self):
-        """Test updating existing med_image"""
         payload = {
             'name': 'Rentgen',
             'med_result': self.med_result.id
@@ -117,7 +119,9 @@ class PrivateMedImageApiTest(APITestCase):
 
 
 class PublicMedResultApiTest(APITestCase):
-    """Test the public med_result API endpoint"""
+    """
+    Test the public med result API.
+    """
 
     def test_login_required(self):
         """Test that login is required to retrieve med_result API endpoint"""
@@ -126,7 +130,9 @@ class PublicMedResultApiTest(APITestCase):
 
 
 class PrivateMedResultApiTest(APITestCase):
-    """Test the private med_result API endpoints"""
+    """
+    Test the private med result API.
+    """
 
     def setUp(self):
         self.user = get_user_model().objects.create_user('prorsok29@vp.pl', 'testpasswd')
@@ -136,7 +142,6 @@ class PrivateMedResultApiTest(APITestCase):
         self.tag = Tag.objects.create(user=self.user, name='Head')
 
     def test_retrieve_med_result(self):
-        """Test retrieving med_results"""
         med1 = MedResult.objects.create(user=self.user, name='First',
                                         description='ABCD',
                                         date_of_exam=timezone.now())
@@ -152,7 +157,6 @@ class PrivateMedResultApiTest(APITestCase):
         self.assertEqual(res.data, serializer.data)
 
     def test_create_med_result_with_full_data_success(self):
-        """Test creating med result with full data"""
         payload = {
             'name': 'Badanie laryngologiczne',
             'description': 'Badanie nosa po operacji przegrody',
@@ -163,7 +167,6 @@ class PrivateMedResultApiTest(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
     def test_create_med_result_with_min_data_success(self):
-        """Test creating med result with min data"""
         payload = {
             'name': 'Badanie laryngologiczne',
         }
@@ -171,7 +174,6 @@ class PrivateMedResultApiTest(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
     def test_create_med_result_invalid_tag_fail(self):
-        """"Test creating med_result with broken payload(tag) must fail"""
         payload = {
             'name': 'New one',
             'tag': 'Something',
@@ -179,8 +181,7 @@ class PrivateMedResultApiTest(APITestCase):
         res = self.client.post(MED_RESULT_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_see_only_user_med_result(self):
-        """Show only med results who were created by the logged in user"""
+    def test_med_result_limited_to_user(self):
         MedResult.objects.create(user=self.user, name='Result 1')
         new_user = get_user_model().objects.create_user('frankbbf@gmail.pl', 'testpasswd')
         MedResult.objects.create(user=new_user, name='Result 2')
@@ -190,12 +191,10 @@ class PrivateMedResultApiTest(APITestCase):
         self.assertContains(res, 'Result 2')
 
     def test_delete_med_result(self):
-        """Test deleting existing med result"""
         res = self.client.delete(get_med_result_detail_url(self.med_result))
         self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_update_med_result(self):
-        """Test updating existing med result"""
         payload = {
             'name': 'Badanie gastrologiczne',
         }
