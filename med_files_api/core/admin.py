@@ -6,7 +6,10 @@ from .models import User, Tag
 
 
 class UserAdmin(BaseUserAdmin):
-    """Override UserAdmin class to use CRUD methods related to own user model in django admin"""
+    """
+    Override UserAdmin class to use CRUD methods related to own user model in
+    django admin.
+    """
     ordering = ['id']
     list_display = ['email', 'name', 'born_date', 'is_superuser']
     fieldsets = (

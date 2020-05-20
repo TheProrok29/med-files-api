@@ -22,7 +22,6 @@ class AdminSiteUserTests(TestCase):
         )
 
     def test_users_listed(self):
-        """Test that users  are listed on admin user page"""
         url = reverse('admin:core_user_changelist')
         res = self.client.get(url)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
@@ -30,19 +29,16 @@ class AdminSiteUserTests(TestCase):
         self.assertContains(res, self.user.email)
 
     def test_user_change_page(self):
-        """Test that the custom user edit page works"""
         url = reverse('admin:core_user_change', args=[self.user.id])
         res = self.client.get(url)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
     def test_user_create_page(self):
-        """Test that the custom user create page works"""
         url = reverse('admin:core_user_add')
         res = self.client.get(url)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
     def test_user_delete_page(self):
-        """Test that the custom user delete page works"""
         url = reverse('admin:core_user_delete', args=[self.user.id])
         res = self.client.get(url)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
@@ -63,7 +59,6 @@ class AdminSiteDoctorTests(TestCase):
                                             specialization=Doctor.DoctorSpecialization.GYNECALOGIST)
 
     def test_doctors_listed(self):
-        """Test that doctors are listed on doctor admin page"""
         url = reverse('admin:doctor_doctor_changelist')
         res = self.client.get(url)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
@@ -71,19 +66,16 @@ class AdminSiteDoctorTests(TestCase):
         self.assertContains(res, self.doctor.address)
 
     def test_doctor_change_page(self):
-        """Test that the doctor edit page works"""
         url = reverse('admin:doctor_doctor_change', args=[self.doctor.id])
         res = self.client.get(url)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
     def test_doctor_create_page(self):
-        """Test that the doctor create page works"""
         url = reverse('admin:doctor_doctor_add')
         res = self.client.get(url)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
     def test_doctor_delete_page(self):
-        """Test that the doctor delete page works"""
         url = reverse('admin:doctor_doctor_delete', args=[self.doctor.id])
         res = self.client.get(url)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
@@ -104,7 +96,6 @@ class AdminSiteMedicineTests(TestCase):
                                                 med_type=Medicine.MedicineType.PROBIOTIC,)
 
     def test_medicines_listed(self):
-        """Test that dmedicines are listed on medicine admin page"""
         url = reverse('admin:medicine_medicine_changelist')
         res = self.client.get(url)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
@@ -113,19 +104,16 @@ class AdminSiteMedicineTests(TestCase):
         self.assertContains(res, 'Probiotic')
 
     def test_medicine_change_page(self):
-        """Test that the medicine edit page works"""
         url = reverse('admin:medicine_medicine_change', args=[self.medicine.id])
         res = self.client.get(url)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
     def test_medicine_create_page(self):
-        """Test that the medicine create page works"""
         url = reverse('admin:medicine_medicine_add')
         res = self.client.get(url)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
     def test_medicine_delete_page(self):
-        """Test that the medicine delete page works"""
         url = reverse('admin:medicine_medicine_change', args=[self.medicine.id])
         res = self.client.get(url)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
