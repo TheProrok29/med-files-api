@@ -1,13 +1,15 @@
-from django.urls import reverse
+import tempfile
+
+from PIL import Image
+from core.models import Tag
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 from django.utils import timezone
 from rest_framework import status
 from rest_framework.test import APITestCase
-import tempfile
-from PIL import Image
+
 from ..models import MedResult, MedImage
 from ..serializers import MedImageSerializer, MedResultSerializer
-from core.models import Tag
 
 MED_IMAGE_URL = reverse('api:med_image-list')
 MED_RESULT_URL = reverse('api:med_result-list')

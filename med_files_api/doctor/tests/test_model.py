@@ -1,7 +1,8 @@
-from django.test import TestCase
-from ..models import Doctor
 from django.contrib.auth import get_user_model
 from django.db.utils import IntegrityError
+from django.test import TestCase
+
+from ..models import Doctor
 
 
 class DoctorModelTest(TestCase):

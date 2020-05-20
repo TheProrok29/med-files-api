@@ -1,12 +1,13 @@
-from django.test import TestCase
-from django.contrib.auth import get_user_model
-from django.utils import timezone
-from django.db.utils import IntegrityError
-from ..models import Visit
-from doctor.models import Doctor
-from medicine.models import Medicine
 from core.models import Tag
+from django.contrib.auth import get_user_model
+from django.db.utils import IntegrityError
+from django.test import TestCase
+from django.utils import timezone
+from doctor.models import Doctor
 from med_result.models import MedResult
+from medicine.models import Medicine
+
+from ..models import Visit
 
 
 class VisitModelTest(TestCase):

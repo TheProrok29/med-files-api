@@ -1,9 +1,10 @@
-from rest_framework import serializers
-from .models import Visit
 from core.models import Tag
-from medicine.models import Medicine
 from doctor.models import Doctor
 from med_result.models import MedResult
+from medicine.models import Medicine
+from rest_framework import serializers
+
+from .models import Visit
 
 
 class UserFilteredPrimaryKeyRelatedField(serializers.PrimaryKeyRelatedField):

@@ -1,8 +1,8 @@
-from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
+from django.test import TestCase, Client
+from django.urls import reverse
 from doctor.models import Doctor
 from medicine.models import Medicine
-from django.urls import reverse
 from rest_framework import status
 
 

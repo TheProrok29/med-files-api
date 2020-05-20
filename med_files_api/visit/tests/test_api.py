@@ -1,12 +1,13 @@
-from django.urls import reverse
-from rest_framework import status
-from rest_framework.test import APITestCase
+from core.models import Tag
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 from django.utils import timezone
 from doctor.models import Doctor
-from medicine.models import Medicine
-from core.models import Tag
 from med_result.models import MedResult
+from medicine.models import Medicine
+from rest_framework import status
+from rest_framework.test import APITestCase
+
 from ..models import Visit
 from ..serializers import VisitSerializer
 

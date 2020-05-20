@@ -1,9 +1,9 @@
+import datetime
+
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
-import datetime
-
 
 CREATE_USER_URL = reverse('api:user-list')
 TOKEN_URL = reverse('user:token')

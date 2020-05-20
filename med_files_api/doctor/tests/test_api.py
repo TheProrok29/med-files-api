@@ -1,10 +1,10 @@
+from django.contrib.auth import get_user_model
 from django.urls import reverse
-from ..models import Doctor
 from rest_framework import status
 from rest_framework.test import APITestCase
-from django.contrib.auth import get_user_model
-from ..serializers import DoctorSerializer
 
+from ..models import Doctor
+from ..serializers import DoctorSerializer
 
 DOCTOR_URL = reverse('api:doctor-list')
 

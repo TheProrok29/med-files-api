@@ -1,6 +1,7 @@
+from core.views import BaseMedFileViewSet
+
 from .models import MedResult, MedImage
 from .serializers import MedResultSerializer, MedImageSerializer
-from core.views import BaseMedFileViewSet
 
 
 class MedResultViewSet(BaseMedFileViewSet):

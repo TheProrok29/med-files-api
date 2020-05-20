@@ -1,7 +1,8 @@
+from core.models import Tag
 from rest_framework import serializers
 from visit.serializers import UserFilteredPrimaryKeyRelatedField
+
 from .models import MedResult, MedImage
-from core.models import Tag
 
 
 class MedResultSerializer(serializers.ModelSerializer):

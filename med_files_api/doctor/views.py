@@ -1,6 +1,7 @@
+from core.views import BaseMedFileViewSet
+
 from .models import Doctor
 from .serializers import DoctorSerializer
-from core.views import BaseMedFileViewSet
 
 
 class DoctorViewSet(BaseMedFileViewSet):
