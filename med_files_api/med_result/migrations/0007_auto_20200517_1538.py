@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=255, verbose_name='Name')),
-                ('image', models.ImageField(blank=True, null=True, upload_to=med_result.models.med_result_file_path)),
+                ('image', models.ImageField(blank=True, null=True, upload_to=med_result.models.med_image_file_path)),
             ],
         ),
         migrations.AlterField(
