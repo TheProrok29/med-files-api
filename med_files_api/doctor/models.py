@@ -4,8 +4,10 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Doctor(models.Model):
-    """"Model using to store Doctor object with internal DoctorSpecialization
-    class for specialziation char choices field"""
+    """
+    Model using to store Doctor object with internal DoctorSpecialization
+    class for specialziation char choices field.
+    """
     class DoctorSpecialization(models.TextChoices):
         UROLOGIST = 'URO', _('Urologist')
         ORTHOPEDIST = 'ORT', _('Orthopedist')
@@ -33,6 +35,10 @@ class Doctor(models.Model):
         default=DoctorSpecialization.FAMILY_DOCTOR)
 
     class Meta:
+        """
+        Constraint to store unique combination of two fields user and name.
+        Different user can save the same doctor in own data.
+        """
         constraints = [
             models.UniqueConstraint(fields=['user', 'name'], name='doctor per user')
         ]

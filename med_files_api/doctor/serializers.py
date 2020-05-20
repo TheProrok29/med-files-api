@@ -5,8 +5,10 @@ from .models import Doctor
 
 
 class DoctorSerializer(serializers.ModelSerializer):
-    """Serializer a Doctor model fields with UniqueTogetherValidator for
-    user and name fields"""
+    """
+    Serializer a doctor model fields with UniqueTogetherValidator for
+    user and name fields.
+    """
     user = serializers.PrimaryKeyRelatedField(
         read_only=True, default=serializers.CurrentUserDefault())
 

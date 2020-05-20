@@ -10,21 +10,26 @@ DOCTOR_URL = reverse('api:doctor-list')
 
 
 def get_doctor_detail_url(doctor):
-    """Return detail url for doctor instance passed as a parametr"""
+    """
+    Return detail url for doctor instance passed as a parametr.
+    """
     return reverse('api:doctor-detail', kwargs={'pk': doctor.pk})
 
 
 class PublicDoctorApiTests(APITestCase):
-    """Test the publicly available Doctor API"""
+    """
+    Test the publicly available doctor API.
+    """
 
     def test_login_required(self):
-        """Test that login is required for retrieving Doctor API endpoint"""
         res = self.client.get(DOCTOR_URL)
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
 class PrivateDoctorApiTest(APITestCase):
-    """Test the autorized Doctor API"""
+    """
+    Test the autorized doctor API.
+    """
 
     def setUp(self):
         self.user = get_user_model().objects.create_user('prorsok29@vp.pl', 'testpasswd')
@@ -37,7 +42,6 @@ class PrivateDoctorApiTest(APITestCase):
             specialization=Doctor.DoctorSpecialization.ALLERGIST)
 
     def test_retrieve_doctors(self):
-        """Test retrieving doctors"""
         Doctor.objects.create(
             user=self.user,
             name='Fakren Makrewn',
@@ -55,7 +59,6 @@ class PrivateDoctorApiTest(APITestCase):
         self.assertEqual(res.data, serializer.data)
 
     def test_create_doctor_with_full_data_success(self):
-        """Test createing doctor with valid payload is successful"""
         payload = {
             'name': 'Fakren Makrewn',
             'address': 'Opole 24/b',
@@ -68,7 +71,6 @@ class PrivateDoctorApiTest(APITestCase):
         self.assertTrue(doctor.name, payload['name'])
 
     def test_create_doctor_with_min_data_success(self):
-        """Test createing doctor with valid min payload is successful"""
         payload = {
             'name': 'Fakren Makrewn',
             'specialization': Doctor.DoctorSpecialization.ONCOLOGIST
@@ -78,8 +80,7 @@ class PrivateDoctorApiTest(APITestCase):
         doctor = Doctor.objects.get(**res.data)
         self.assertTrue(doctor.name, payload['name'])
 
-    def test_doctor_exists(self):
-        """Test creating doctor that already exists fails"""
+    def test_create_existing_doctor_fail(self):
         payload = {
             'name': 'Oleg Faustin',
             'address': 'Opole 24/b',
@@ -89,8 +90,7 @@ class PrivateDoctorApiTest(APITestCase):
         res = self.client.post(DOCTOR_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_see_only_user_doctors(self):
-        """Show only doctors who were created by the logged in user"""
+    def test_doctor_limited_to_user(self):
         Doctor.objects.create(
             user=self.user,
             name='Mikael Blumberg',
@@ -106,7 +106,6 @@ class PrivateDoctorApiTest(APITestCase):
         self.assertContains(res, 'Pat Sement')
 
     def test_create_doctor_invalid_specialization_fail(self):
-        """"Test creating doctor with broken payload(specialziation) must fail"""
         payload = {
             'name': 'Fakren Makrewn',
             'address': 'Opole 24/b',
@@ -117,12 +116,10 @@ class PrivateDoctorApiTest(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_delete_doctor(self):
-        """Test deleting doctor"""
         res = self.client.delete(get_doctor_detail_url(self.new_doctor))
         self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_update_doctor(self):
-        """Test update existing doctor"""
         payload = {
             'name': 'Fakren Makrewn',
             'address': 'Warsaw 24/b',
@@ -135,7 +132,6 @@ class PrivateDoctorApiTest(APITestCase):
         self.assertEqual(self.new_doctor.phone_number, payload['phone_number'])
 
     def test_create_the_same_doctor_for_dfferent_user_success(self):
-        """Test creating the same doctor for different user must be success"""
         Doctor.objects.create(user=self.user, name='Fakren Makrewn')
         new_user = get_user_model().objects.create_user('kalika@gmail.com', 'tesrfgtpasswd')
         payload = {

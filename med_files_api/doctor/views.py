@@ -5,6 +5,8 @@ from .serializers import DoctorSerializer
 
 
 class DoctorViewSet(BaseMedFileViewSet):
-    """"CRUD options for Doctor for authenticated user"""
+    """"
+    CRUD options for doctor only for authenticated user.
+    """
     serializer_class = DoctorSerializer
     queryset = Doctor.objects.all()
