@@ -70,6 +70,7 @@ class PrivateVisitApiTest(APITestCase):
             'address': 'Wrocław Armii Krajowej 1d/2',
             'doctor': self.doctor.id,
             'medicine': self.medicine.id,
+            'date_of_exam': timezone.now().date(),
             'med_result': self.med_result.id,
             'tag': self.tag.id,
         }

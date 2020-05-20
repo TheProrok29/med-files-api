@@ -12,7 +12,6 @@ class MedResultSerializer(serializers.ModelSerializer):
     class Meta:
         model = MedResult
         fields = ('id', 'name', 'description', 'add_date', 'date_of_exam', 'images', 'tag')
-        read_only_fields = ('id',)
 
 
 class MedImageSerializer(serializers.ModelSerializer):
