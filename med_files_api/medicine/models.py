@@ -4,8 +4,10 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Medicine(models.Model):
-    """Model for medicine objects with internal enum class for med_form and med_type char choices field
-    include unique constraint for user and name field combination"""
+    """
+    Model for medicine objects with internal enum class for med_form and med_type char choices field
+    include unique constraint for user and name field combination.
+    """
     class MedicineForm(models.TextChoices):
         TABLETS = 'TAB', _('Tablets')
         SYRUP = 'SYR', _('Surup')

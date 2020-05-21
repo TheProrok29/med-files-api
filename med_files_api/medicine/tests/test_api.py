@@ -10,21 +10,26 @@ MEDICINE_URL = reverse('api:medicine-list')
 
 
 def get_medicine_detail_url(medicine):
-    """Return detail url for medicine instance passed as a parametr"""
+    """
+    Return detail url for medicine instance passed as a parametr.
+    """
     return reverse('api:medicine-detail', kwargs={'pk': medicine.pk})
 
 
 class PublicMedicineApiTest(APITestCase):
-    """Test the public medicine API endpoint"""
+    """
+    Test the public medicine API.
+    """
 
     def test_login_required(self):
-        """Test that login is required to retrieve medicine API endpoint"""
         res = self.client.get(MEDICINE_URL)
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
 class PrivateMedicineApiTest(APITestCase):
-    """Test the private medicine API endpoints"""
+    """
+    Test the private medicine API.
+    """
 
     def setUp(self):
         self.user = get_user_model().objects.create_user('prorsok29@vp.pl', 'testpasswd')
@@ -32,7 +37,6 @@ class PrivateMedicineApiTest(APITestCase):
         self.new_medicine = Medicine.objects.create(user=self.user, name='Postin')
 
     def test_retrieve_medicines(self):
-        """Test retrieving medicines"""
         Medicine.objects.create(user=self.user, name='Alkamenkun')
         Medicine.objects.create(user=self.user, name='Dioxin')
         res = self.client.get(MEDICINE_URL)
@@ -42,7 +46,6 @@ class PrivateMedicineApiTest(APITestCase):
         self.assertEqual(res.data, serializer.data)
 
     def test_create_medicine_with_full_data_success(self):
-        """Test createing medicine with valid payload is successful"""
         payload = {
             'name': 'Gripex',
             'description': 'This is the best pain killer',
@@ -55,7 +58,6 @@ class PrivateMedicineApiTest(APITestCase):
         self.assertTrue(medicine.name, payload['name'])
 
     def test_create_medicine_with_min_data_success(self):
-        """Test creating medicine with valid min payload is successful"""
         payload = {
             'name': 'Apap',
         }
@@ -65,7 +67,6 @@ class PrivateMedicineApiTest(APITestCase):
         self.assertTrue(medicine.name, payload['name'])
 
     def test_medicine_exists(self):
-        """Test creating medicine that already exists fails"""
         payload = {
             'name': 'Finx',
         }
@@ -75,7 +76,6 @@ class PrivateMedicineApiTest(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_medicine_invalid_med_form_fail(self):
-        """"Test creating medicine with broken payload(med_form) must fail"""
         payload = {
             'name': 'New one',
             'description': 'This is the best pain killer',
@@ -85,7 +85,6 @@ class PrivateMedicineApiTest(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_medicine_invalid_med_type_fail(self):
-        """Test creating medicine with broken payload(med_type) must fail"""
         payload = {
             'name': 'New one',
             'description': 'This is the best pain killer',
@@ -94,8 +93,7 @@ class PrivateMedicineApiTest(APITestCase):
         res = self.client.post(MEDICINE_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_see_only_user_medicines(self):
-        """Show only medicines who were created by the logged in user"""
+    def test_medicines_limited_to_user(self):
         Medicine.objects.create(user=self.user, name='Makumba')
         new_user = get_user_model().objects.create_user('frankbbf@gmail.pl', 'testpasswd')
         Medicine.objects.create(user=new_user, name='Parumba')
@@ -105,12 +103,10 @@ class PrivateMedicineApiTest(APITestCase):
         self.assertContains(res, 'Parumba')
 
     def test_delete_medicine(self):
-        """Test deleting existing medicine"""
         res = self.client.delete(get_medicine_detail_url(self.new_medicine))
         self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_update_medicine(self):
-        """Test updating existing medicine"""
         payload = {
             'description': 'Best antybiotic',
             'med_type': Medicine.MedicineType.ANTIBIOTIC,
@@ -123,7 +119,6 @@ class PrivateMedicineApiTest(APITestCase):
         self.assertEqual(self.new_medicine.med_form, payload['med_form'])
 
     def test_create_the_same_medicine_for_different_user_success(self):
-        """Test creating the same medicine for different user must be success"""
         Medicine.objects.create(user=self.user, name='Makumba')
         new_user = get_user_model().objects.create_user('kalika@gmail.com', 'tesrfgtpasswd')
         payload = {
