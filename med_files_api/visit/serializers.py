@@ -8,6 +8,10 @@ from .models import Visit
 
 
 class UserFilteredPrimaryKeyRelatedField(serializers.PrimaryKeyRelatedField):
+    """
+    Class filtered primary key model relation only for request.user.
+    """
+
     def get_queryset(self):
         request = self.context.get('request', None)
         queryset = super(UserFilteredPrimaryKeyRelatedField, self).get_queryset()
@@ -17,7 +21,9 @@ class UserFilteredPrimaryKeyRelatedField(serializers.PrimaryKeyRelatedField):
 
 
 class VisitSerializer(serializers.ModelSerializer):
-    """Serializer a Visit model"""
+    """
+    Serializer a visit model.
+    """
     user = serializers.PrimaryKeyRelatedField(
         read_only=True, default=serializers.CurrentUserDefault())
 

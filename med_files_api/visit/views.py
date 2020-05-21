@@ -5,6 +5,8 @@ from .serializers import VisitSerializer
 
 
 class VisitViewSet(BaseMedFileViewSet):
-    """"CRUD options for Medicine for authenticated user"""
+    """
+    CRUD options for visit for authenticated user.
+    """
     serializer_class = VisitSerializer
     queryset = Visit.objects.all()

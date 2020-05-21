@@ -21,7 +21,6 @@ class VisitModelTest(TestCase):
         self.med_result = MedResult.objects.create(user=self.user, name='Head Rentgen', date_of_exam=timezone.now())
 
     def test_create_visit_with_full_data(self):
-        """Test creating a new visit"""
         visit = Visit.objects.create(user=self.user,
                                      visit_date=timezone.now(),
                                      name='Wizyta Laryngologiczna',
@@ -35,16 +34,13 @@ class VisitModelTest(TestCase):
         self.assertEqual(visit.tag.get(), self.tag)
 
     def test_create_visit_with_minimum_data(self):
-        """Test creating a new visit with minimum data"""
         visit = Visit.objects.create(user=self.user,
                                      name='Wizyta Urologiczna',
                                      doctor=self.doctor)
         self.assertEqual(visit.name, 'Wizyta Urologiczna')
         self.assertEqual(visit.doctor, self.doctor)
 
-    def test_create_visit_with_broken_data(self):
-        """Test creating visit using broken data, based on database constraint
-        must be fails"""
+    def test_create_visit_with_broken_data_fail(self):
         with self.assertRaises(Exception) as raised1:
             Visit.objects.create(user=self.user,
                                  name='Wizyta Urologiczna',

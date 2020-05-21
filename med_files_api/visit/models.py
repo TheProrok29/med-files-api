@@ -7,8 +7,10 @@ from medicine.models import Medicine
 
 
 class Visit(models.Model):
-    """A model that represents a medical visit and integrates
-    most of the other modules"""
+    """
+    Model that represents a medical visit and integrates
+    most of the other modules.
+    """
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     visit_date = models.DateField(blank=True, null=True)
