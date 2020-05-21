@@ -7,33 +7,46 @@ from .serializers import UserAuthDataSerializer, AuthTokenSerializer, UserDataSe
 
 
 class CreateUserView(mixins.CreateModelMixin, viewsets.GenericViewSet):
-    """Create a new user in the system"""
+    """
+    Create a new user view.
+    """
     model = User
     serializer_class = UserAuthDataSerializer
 
 
 class CreateTokenView(ObtainAuthToken):
-    """Create new auth token for user"""
+    """
+    Create new auth token for user view.
+    """
     serializer_class = AuthTokenSerializer
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
 
 
 class ManageUserAuthenticationDataView(generics.RetrieveUpdateAPIView):
-    """Manage the authenticated user"""
+    """
+    Manage user authenitaction required data.
+    """
     serializer_class = UserAuthDataSerializer
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
     def get_object(self):
-        """Retrieve and return authentiocated user"""
+        """
+        Retrieve and return authenticated user.
+        """
         return self.request.user
 
 
 class ManageUserDataView(generics.RetrieveUpdateAPIView):
+    """
+    Manage user optional data.
+    """
     serializer_class = UserDataSerializer
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
     def get_object(self):
-        """Retrieve and return authentiocated user"""
+        """
+        Retrieve and return authentiocated user.
+        """
         return self.request.user

@@ -5,18 +5,24 @@ from rest_framework import serializers
 
 
 class UserAuthDataSerializer(serializers.ModelSerializer):
-    """Serializert for the users object"""
+    """
+    Serializert for the users object auth required fields.
+    """
     class Meta:
         model = get_user_model()
         fields = ('id', 'email', 'password')
         extra_kwargs = {'password': {'write_only': True, 'min_length': 5}}
 
     def create(self, validated_data):
-        """Create a new user with encrypted password and return it"""
+        """
+        Create a new user with encrypted password and return it.
+        """
         return get_user_model().objects.create_user(**validated_data)
 
     def update(self, instance, validated_data):
-        """Update a user, setting the password correctly and return it"""
+        """
+        Update a user, setting the password correctly and return it.
+        """
         password = validated_data.pop('password', None)
         user = super().update(instance, validated_data)
 
@@ -27,14 +33,18 @@ class UserAuthDataSerializer(serializers.ModelSerializer):
 
 
 class UserDataSerializer(serializers.ModelSerializer):
-
+    """
+    Serializert for the users object optional data fields.
+    """
     class Meta:
         model = get_user_model()
         fields = ('id', 'name', 'born_date')
 
 
 class AuthTokenSerializer(serializers.Serializer):
-    """Serializer for the user authentication boject"""
+    """
+    Serializer for the user token object.
+    """
     email = serializers.CharField()
     password = serializers.CharField(
         style={'input_type': 'password'},
@@ -42,7 +52,9 @@ class AuthTokenSerializer(serializers.Serializer):
     )
 
     def validate(self, attrs):
-        """"Validate and authenticate the user"""
+        """
+        Validate and authenticate the user.
+        """
         email = attrs.get('email')
         password = attrs.get('password')
 
