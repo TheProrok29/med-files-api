@@ -15,6 +15,7 @@ class DoctorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doctor
         fields = ('id', 'name', 'user', 'address', 'phone_number', 'specialization')
+        read_only_fields = ('id',)
         validators = [
             UniqueTogetherValidator(
                 queryset=Doctor.objects.all(),

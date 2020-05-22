@@ -35,3 +35,4 @@ class VisitSerializer(serializers.ModelSerializer):
     class Meta:
         model = Visit
         fields = ('id', 'user', 'name', 'visit_date', 'address', 'doctor', 'medicine', 'med_result', 'tag')
+        read_only_fields = ('id',)

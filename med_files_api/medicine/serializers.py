@@ -15,6 +15,7 @@ class MedicineSerializer(serializers.ModelSerializer):
     class Meta:
         model = Medicine
         fields = ('id', 'name', 'user', 'description', 'med_form', 'med_type')
+        read_only_fields = ('id',)
         validators = [
             UniqueTogetherValidator(
                 queryset=Medicine.objects.all(),
