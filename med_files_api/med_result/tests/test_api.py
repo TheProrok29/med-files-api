@@ -9,7 +9,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from ..models import MedResult, MedImage
-from ..serializers import MedImageSerializer, MedResultSerializer
+from ..serializers import MedImageSerializer, MedResultSerializer, MedResultDetailSerializer
 
 MED_IMAGE_URL = reverse('api:med_image-list')
 MED_RESULT_URL = reverse('api:med_result-list')
@@ -202,3 +202,12 @@ class PrivateMedResultApiTest(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.med_result.refresh_from_db()
         self.assertEqual(self.med_result.name, payload['name'])
+
+    def test_view_med_result_detail(self):
+        med_result = sample_med_result(user=self.user)
+        med_result.tag.add(self.tag)
+        url = get_med_result_detail_url(med_result)
+        res = self.client.get(url)
+        serializer = MedResultDetailSerializer(med_result)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data, serializer.data)
