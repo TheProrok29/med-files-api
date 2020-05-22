@@ -10,7 +10,9 @@ RUN apk add  --update --no-cache --virtual .tmp-build-deps \
 RUN mkdir /code
 WORKDIR /code
 ADD requirements.txt /code/
+ADD requirements-dev.txt /code/
 RUN pip install -r requirements.txt
+RUN pip install -r requirements-dev.txt
 RUN apk del .tmp-build-deps
 ADD ./ /code/
 

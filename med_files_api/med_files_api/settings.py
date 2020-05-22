@@ -109,7 +109,7 @@ DATABASES = {
 #         'NAME': 'postgres',
 #         'USER': config('POSTGRES_USER'),
 #         'PASSWORD': config('POSTGRES_PASSWORD'),
-#         'HOST': config('DJANGO_DB_HOST', default='localhost'),
+#         'HOST': config('DJANGO_DB_HOST', default='db'),
 #         'PORT': '5432',
 #     }
 # }
