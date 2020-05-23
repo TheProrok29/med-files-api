@@ -2,7 +2,7 @@ from core.models import Tag
 from django.conf import settings
 from django.db import models
 from doctor.models import Doctor
-from med_result.models import MedResult
+# from med_result.models import MedResult
 from medicine.models import Medicine
 
 
@@ -16,9 +16,8 @@ class Visit(models.Model):
     visit_date = models.DateField(blank=True, null=True)
     name = models.CharField(verbose_name='Name', max_length=200)
     address = models.CharField(verbose_name='Adres', max_length=200, blank=True, null=True)
-    doctor = models.ForeignKey(Doctor, null=True, on_delete=models.SET_NULL)
+    doctor = models.ForeignKey(Doctor, blank=True, null=True, on_delete=models.SET_NULL)
     medicine = models.ManyToManyField(Medicine, blank=True)
-    med_result = models.ManyToManyField(MedResult, blank=True)
     tag = models.ManyToManyField(Tag, blank=True)
 
     def __str__(self):
