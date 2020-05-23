@@ -2,7 +2,6 @@ from core.models import Tag
 from core.serializers import UserFilteredPrimaryKeyRelatedField
 from doctor.models import Doctor
 from doctor.serializers import DoctorSerializer
-from med_result.models import MedResult
 from med_result.serializers import MedResultSerializer
 from medicine.models import Medicine
 from medicine.serializers import MedicineSerializer
@@ -17,17 +16,14 @@ class VisitSerializer(serializers.ModelSerializer):
     """
     Serializer a visit model.
     """
-    user = serializers.PrimaryKeyRelatedField(
-        read_only=True, default=serializers.CurrentUserDefault())
-
-    doctor = UserFilteredPrimaryKeyRelatedField(queryset=Doctor.objects)
+    doctor = UserFilteredPrimaryKeyRelatedField(required=False, queryset=Doctor.objects)
     medicine = UserFilteredPrimaryKeyRelatedField(many=True, queryset=Medicine.objects)
-    med_result = UserFilteredPrimaryKeyRelatedField(many=True, queryset=MedResult.objects)
+    med_result = serializers.HyperlinkedIdentityField(many=True, read_only=True, view_name='api:med_result-detail')
     tag = UserFilteredPrimaryKeyRelatedField(many=True, queryset=Tag.objects)
 
     class Meta:
         model = Visit
-        fields = ('id', 'user', 'name', 'visit_date', 'address', 'doctor', 'medicine', 'med_result', 'tag')
+        fields = ('id', 'name', 'visit_date', 'address', 'doctor', 'medicine', 'med_result', 'tag')
         read_only_fields = ('id',)
 
 
