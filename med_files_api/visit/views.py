@@ -1,7 +1,7 @@
 from core.views import BaseMedFileViewSet
 
 from .models import Visit
-from .serializers import VisitSerializer
+from .serializers import VisitSerializer, VisitDetailSerializer
 
 
 class VisitViewSet(BaseMedFileViewSet):
@@ -10,3 +10,11 @@ class VisitViewSet(BaseMedFileViewSet):
     """
     serializer_class = VisitSerializer
     queryset = Visit.objects.all()
+
+    def get_serializer_class(self):
+        """
+        Return appropriate serializer class.
+        """
+        if self.action == 'retrieve':
+            return VisitDetailSerializer
+        return self.serializer_class

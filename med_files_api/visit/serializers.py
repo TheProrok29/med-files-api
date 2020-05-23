@@ -1,23 +1,16 @@
 from core.models import Tag
+from core.serializers import UserFilteredPrimaryKeyRelatedField
 from doctor.models import Doctor
+from doctor.serializers import DoctorSerializer
 from med_result.models import MedResult
+from med_result.serializers import MedResultSerializer
 from medicine.models import Medicine
+from medicine.serializers import MedicineSerializer
+from core.serializers import TagSerializer
 from rest_framework import serializers
 
+
 from .models import Visit
-
-
-class UserFilteredPrimaryKeyRelatedField(serializers.PrimaryKeyRelatedField):
-    """
-    Class filtered primary key model relation only for request.user.
-    """
-
-    def get_queryset(self):
-        request = self.context.get('request', None)
-        queryset = super(UserFilteredPrimaryKeyRelatedField, self).get_queryset()
-        if not request or not queryset:
-            return None
-        return queryset.filter(user=request.user)
 
 
 class VisitSerializer(serializers.ModelSerializer):
@@ -36,3 +29,14 @@ class VisitSerializer(serializers.ModelSerializer):
         model = Visit
         fields = ('id', 'user', 'name', 'visit_date', 'address', 'doctor', 'medicine', 'med_result', 'tag')
         read_only_fields = ('id',)
+
+
+class VisitDetailSerializer(VisitSerializer):
+    """
+    Serializer a visit detail. Show detail visit with other conencted models data
+    instead of only pk.
+    """
+    doctor = DoctorSerializer(read_only=True)
+    medicine = MedicineSerializer(many=True, read_only=True)
+    med_result = MedResultSerializer(many=True, read_only=True)
+    tag = TagSerializer(many=True, read_only=True)
