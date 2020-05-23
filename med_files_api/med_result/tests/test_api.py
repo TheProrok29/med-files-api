@@ -7,7 +7,8 @@ from django.urls import reverse
 from django.utils import timezone
 from rest_framework import status
 from rest_framework.test import APITestCase
-
+from visit.models import Visit
+from doctor.models import Doctor
 from ..models import MedResult, MedImage
 from ..serializers import MedImageSerializer, MedResultSerializer, MedResultDetailSerializer
 
@@ -140,15 +141,20 @@ class PrivateMedResultApiTest(APITestCase):
         self.med_result = sample_med_result(user=self.user)
         self.med_image = MedImage.objects.create(user=self.user, name='Image 1')
         self.tag = Tag.objects.create(user=self.user, name='Head')
+        self.visit = Visit.objects.create(user=self.user,
+                                          name='Wizyta Urologiczna',
+                                          doctor=Doctor.objects.create(user=self.user, name='Jan Kowalski'))
 
     def test_retrieve_med_result(self):
         med1 = MedResult.objects.create(user=self.user, name='First',
                                         description='ABCD',
-                                        date_of_exam=timezone.now())
+                                        date_of_exam=timezone.now().date(),
+                                        visit=self.visit)
         med1.tag.add(self.tag)
         med2 = MedResult.objects.create(user=self.user, name='Second',
                                         description='DCBA',
-                                        date_of_exam=timezone.now())
+                                        date_of_exam=timezone.now().date(),
+                                        visit=self.visit)
         med2.tag.add(self.tag)
         res = self.client.get(MED_RESULT_URL)
         med_results = MedResult.objects.all().order_by('-name')
@@ -161,6 +167,7 @@ class PrivateMedResultApiTest(APITestCase):
             'name': 'Badanie laryngologiczne',
             'description': 'Badanie nosa po operacji przegrody',
             'date_of_exam': timezone.now().date(),
+            'visit': self.visit.id,
             'tag': self.tag.id,
         }
         res = self.client.post(MED_RESULT_URL, payload)
@@ -177,6 +184,14 @@ class PrivateMedResultApiTest(APITestCase):
         payload = {
             'name': 'New one',
             'tag': 'Something',
+        }
+        res = self.client.post(MED_RESULT_URL, payload)
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_create_med_result_invalid_visit_fail(self):
+        payload = {
+            'name': 'New one',
+            'visit': 'Something',
         }
         res = self.client.post(MED_RESULT_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)

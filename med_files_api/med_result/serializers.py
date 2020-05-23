@@ -2,6 +2,7 @@ from core.models import Tag
 from rest_framework import serializers
 from core.serializers import UserFilteredPrimaryKeyRelatedField
 from core.serializers import TagSerializer
+from visit.models import Visit
 from .models import MedResult, MedImage
 
 
@@ -23,10 +24,11 @@ class MedResultSerializer(serializers.ModelSerializer):
     """
     tag = serializers.PrimaryKeyRelatedField(many=True, queryset=Tag.objects.all())
     images = serializers.HyperlinkedIdentityField(many=True, read_only=True, view_name='api:med_image-detail')
+    visit = UserFilteredPrimaryKeyRelatedField(required=False, queryset=Visit.objects)
 
     class Meta:
         model = MedResult
-        fields = ('id', 'name', 'description', 'add_date', 'date_of_exam', 'images', 'tag')
+        fields = ('id', 'name', 'description', 'add_date', 'date_of_exam', 'images', 'visit', 'tag')
         read_only_fields = ('id',)
 
 
