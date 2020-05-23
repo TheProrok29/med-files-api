@@ -9,7 +9,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from ..models import Visit
-from ..serializers import VisitSerializer
+from ..serializers import VisitSerializer, VisitDetailSerializer
 
 VISIT_URL = reverse('api:visit-list')
 
@@ -124,3 +124,18 @@ class PrivateVisitApiTest(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.new_visit.refresh_from_db()
         self.assertEqual(self.new_visit.address, payload['address'])
+
+    def test_view_visit_detail(self):
+        visit = Visit.objects.create(user=self.user,
+                                     visit_date=timezone.now().date(),
+                                     name='Wizyta Laryngologiczna',
+                                     address='Opole Chrobrego 24/3d',
+                                     doctor=self.doctor)
+        visit.tag.add(self.tag)
+        visit.medicine.add(self.medicine)
+        visit.med_result.add(self.med_result)
+        url = get_visit_detail_url(visit)
+        res = self.client.get(url)
+        serializer = VisitDetailSerializer(visit)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data, serializer.data)
