@@ -2,6 +2,7 @@ import os
 import uuid
 
 from core.models import Tag
+from visit.models import Visit
 from django.conf import settings
 from django.db import models
 
@@ -22,9 +23,10 @@ class MedResult(models.Model):
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(verbose_name='Name', max_length=255)
-    description = models.TextField(verbose_name='Description', blank=True)
-    add_date = models.DateTimeField(auto_now_add=True)
+    description = models.TextField(verbose_name='Description', blank=True, null=True)
+    add_date = models.DateField(auto_now_add=True)
     date_of_exam = models.DateField(null=True, blank=True)
+    visit = models.ForeignKey(Visit, null=True, blank=True, on_delete=models.SET_NULL, related_name='med_result')
     tag = models.ManyToManyField(Tag, blank=True)
 
     def __str__(self):
