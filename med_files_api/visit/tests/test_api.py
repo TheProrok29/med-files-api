@@ -47,20 +47,18 @@ class PrivateVisitApiTest(APITestCase):
 
     def test_retrieve_visit(self):
         visit1 = Visit.objects.create(user=self.user,
-                                      visit_date=timezone.now(),
+                                      visit_date=timezone.now().date(),
                                       name='Wizyta Laryngologiczna',
                                       address='Opole Chrobrego 24/3d',
                                       doctor=self.doctor)
         visit1.medicine.add(self.medicine)
-        visit1.med_result.add(self.med_result)
         visit1.tag.add(self.tag)
         visit2 = Visit.objects.create(user=self.user,
-                                      visit_date=timezone.now(),
+                                      visit_date=timezone.now().date(),
                                       name='Wizyta Jakaśtam',
                                       address='Wrocław Armii Krajowej 1d/2',
                                       doctor=self.doctor)
         visit2.medicine.add(self.medicine)
-        visit2.med_result.add(self.med_result)
         visit2.tag.add(self.tag)
         res = self.client.get(VISIT_URL)
         visits = Visit.objects.all().order_by('-name')
@@ -74,27 +72,16 @@ class PrivateVisitApiTest(APITestCase):
             'address': 'Wrocław Armii Krajowej 1d/2',
             'doctor': self.doctor.id,
             'medicine': self.medicine.id,
-            'date_of_exam': timezone.now().date(),
-            'med_result': self.med_result.id,
+            'visit_date': timezone.now().date(),
             'tag': self.tag.id,
         }
         res = self.client.post(VISIT_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
     def test_create_visit_with_min_data_success(self):
-        payload = {
-            'name': 'Wizyta Laryngologiczna',
-            'doctor': self.doctor.id,
-        }
+        payload = {'name': 'Wizyta Laryngologiczna', }
         res = self.client.post(VISIT_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
-
-    def test_create_visit_without_doctor_fail(self):
-        payload = {
-            'name': 'Wizyta Laryngologiczna',
-        }
-        res = self.client.post(VISIT_URL, payload)
-        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_visit_without_name_fail(self):
         payload = {

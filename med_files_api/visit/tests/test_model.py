@@ -4,7 +4,6 @@ from django.db.utils import IntegrityError
 from django.test import TestCase
 from django.utils import timezone
 from doctor.models import Doctor
-from med_result.models import MedResult
 from medicine.models import Medicine
 
 from ..models import Visit
@@ -18,7 +17,6 @@ class VisitModelTest(TestCase):
         self.doctor = Doctor.objects.create(user=self.user, name='Jan Kowalski')
         self.medicine = Medicine.objects.create(user=self.user, name='Apap')
         self.tag = Tag.objects.create(user=self.user, name='Wro')
-        self.med_result = MedResult.objects.create(user=self.user, name='Head Rentgen', date_of_exam=timezone.now())
 
     def test_create_visit_with_full_data(self):
         visit = Visit.objects.create(user=self.user,
@@ -27,7 +25,6 @@ class VisitModelTest(TestCase):
                                      address='Opole Chrobrego 24/3d',
                                      doctor=self.doctor)
         visit.medicine.add(self.medicine)
-        visit.med_result.add(self.med_result)
         visit.tag.add(self.tag)
         self.assertTrue(isinstance(visit, Visit))
         self.assertEqual(visit.__str__(), visit.name)
