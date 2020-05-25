@@ -64,7 +64,7 @@ Simply using:
 Running the tests
 =================
 
-To run all authomated tests use:
+To run all automated tests use:
 
 .. code-block:: bash
 
