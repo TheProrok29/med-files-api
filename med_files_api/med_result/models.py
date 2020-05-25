@@ -40,7 +40,7 @@ class MedImage(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(verbose_name='Name', max_length=255)
     image = models.ImageField(null=True, blank=True, upload_to=med_image_file_path)
-    med_result = models.ForeignKey(MedResult, null=True, on_delete=models.CASCADE, related_name='images')
+    med_result = models.ForeignKey(MedResult, null=True, blank=True, on_delete=models.CASCADE, related_name='images')
 
     def __str__(self):
         return self.name
