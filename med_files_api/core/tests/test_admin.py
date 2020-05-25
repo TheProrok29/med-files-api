@@ -4,6 +4,7 @@ from django.urls import reverse
 from doctor.models import Doctor
 from medicine.models import Medicine
 from rest_framework import status
+from ..models import Tag
 
 
 class AdminSiteUserTests(TestCase):
@@ -115,5 +116,38 @@ class AdminSiteMedicineTests(TestCase):
 
     def test_medicine_delete_page(self):
         url = reverse('admin:medicine_medicine_change', args=[self.medicine.id])
+        res = self.client.get(url)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+
+class AdminSiteTagTests(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+        self.admin_user = get_user_model().objects.create_superuser(
+            email='tom@gmail.com',
+            password='password1234$$ ,'
+        )
+        self.client.force_login(self.admin_user)
+        self.tag = Tag.objects.create(user=self.admin_user, name='Coś')
+
+    def test_tags_listed(self):
+        url = reverse('admin:core_tag_changelist')
+        res = self.client.get(url)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertContains(res, self.tag.name)
+
+    def test_tag_change_page(self):
+        url = reverse('admin:core_tag_change', args=[self.tag.id])
+        res = self.client.get(url)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_tag_create_page(self):
+        url = reverse('admin:core_tag_add')
+        res = self.client.get(url)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_tag_delete_page(self):
+        url = reverse('admin:core_tag_delete', args=[self.tag.id])
         res = self.client.get(url)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
