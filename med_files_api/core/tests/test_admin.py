@@ -5,7 +5,7 @@ from doctor.models import Doctor
 from medicine.models import Medicine
 from rest_framework import status
 from ..models import Tag
-from med_result.models import MedResult
+from med_result.models import MedResult, MedImage
 
 
 class AdminSiteUserTests(TestCase):
@@ -181,7 +181,40 @@ class AdminSiteMedResultTests(TestCase):
         res = self.client.get(url)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
-    def test_tag_delete_page(self):
+    def test_med_result_delete_page(self):
         url = reverse('admin:med_result_medresult_delete', args=[self.med_result.id])
+        res = self.client.get(url)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+
+class AdminSiteMedImageTests(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+        self.admin_user = get_user_model().objects.create_superuser(
+            email='tom@gmail.com',
+            password='password1234$$ ,'
+        )
+        self.client.force_login(self.admin_user)
+        self.med_image = MedImage.objects.create(user=self.admin_user, name='Medical image 1')
+
+    def test_med_image_listed(self):
+        url = reverse('admin:med_result_medimage_changelist')
+        res = self.client.get(url)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertContains(res, self.med_image.name)
+
+    def test_med_image_change_page(self):
+        url = reverse('admin:med_result_medimage_change', args=[self.med_image.id])
+        res = self.client.get(url)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_med_image_create_page(self):
+        url = reverse('admin:med_result_medimage_add')
+        res = self.client.get(url)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_med_image_delete_page(self):
+        url = reverse('admin:med_result_medimage_delete', args=[self.med_image.id])
         res = self.client.get(url)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
