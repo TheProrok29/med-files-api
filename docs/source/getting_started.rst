@@ -49,6 +49,14 @@ Supported Django Rest Framework versions
 * probably few other versions also
 
 
+All depedencys are in requirements.txt file, recomended way to install it is using python virtual environment
+like `venv <https://docs.python.org/3/library/venv.html>`_ or `virtualenv <https://virtualenv.pypa.io/en/latest/>`_ using pip install -r requirements.txt
+inside virtual environment.
+
+Optional depedencys for development purpose are in requirements-dev.txt. For example to run `codecov <https://docs.codecov.io/docs/>`_,
+`coverage <https://coverage.readthedocs.io/en/coverage-5.1/>`_, git pre-commit hooks, `Sphinx <https://www.sphinx-doc.org/en/master/>`_ and more.
+
+
 Installation
 ------------
 
@@ -105,3 +113,28 @@ To run all automated tests use:
 .. code-block:: bash
 
     $ python manage.py test
+
+
+Coding style
+-------------
+
+I'm using `autopep8 <https://pypi.org/project/autopep8/>`_ and `flake8 <https://flake8.pycqa.org/en/latest/>`_
+
+Documentation
+--------------
+
+Documentation is under development and partially available to study at
+`Read the Docs <https://med-files-api.readthedocs.io/en/latest/>`_
+, also ``api/docs/`` endpoint after run application and ``docs`` directory.
+
+Contributing
+------------
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Please make sure to update tests as appropriate.
+
+Project status
+--------------
+
+This is my pet project available for me and my wife to monitor ours medical history. Aplication is still under development and in future
+I'll start build front-end part off this app.
