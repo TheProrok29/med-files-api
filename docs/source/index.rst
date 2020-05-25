@@ -6,7 +6,7 @@ Welcome to MedFiles API's documentation!
     :caption: Basics
 
     introduction
-
+    getting_started
 
 Indices and tables
 ==================
