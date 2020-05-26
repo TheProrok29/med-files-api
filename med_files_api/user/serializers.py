@@ -6,7 +6,7 @@ from rest_framework import serializers
 
 class UserAuthDataSerializer(serializers.ModelSerializer):
     """
-    Serializert for the users object auth required fields.
+    Serializer for the users object auth required fields.
     """
     class Meta:
         model = get_user_model()
