@@ -3,13 +3,15 @@ from django.utils.translation import ugettext_lazy as _
 
 from rest_framework import serializers
 
+User = get_user_model()
+
 
 class UserAuthDataSerializer(serializers.ModelSerializer):
     """
     Serializer for the users object auth required fields.
     """
     class Meta:
-        model = get_user_model()
+        model = User
         fields = ('id', 'email', 'password')
         read_only_fields = ('id',)
         extra_kwargs = {'password': {'write_only': True, 'min_length': 5}}
@@ -18,7 +20,7 @@ class UserAuthDataSerializer(serializers.ModelSerializer):
         """
         Create a new user with encrypted password and return it.
         """
-        return get_user_model().objects.create_user(**validated_data)
+        return User.objects.create_user(**validated_data)
 
     def update(self, instance, validated_data):
         """
@@ -38,7 +40,7 @@ class UserDataSerializer(serializers.ModelSerializer):
     Serializert for the users object optional data fields.
     """
     class Meta:
-        model = get_user_model()
+        model = User
         fields = ('id', 'name', 'born_date')
 
 
