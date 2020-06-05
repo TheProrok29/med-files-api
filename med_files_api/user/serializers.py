@@ -6,13 +6,16 @@ from rest_framework import serializers
 User = get_user_model()
 
 
-class UserAuthDataSerializer(serializers.ModelSerializer):
+class UserDataSerializer(serializers.ModelSerializer):
     """
-    Serializer for the users object auth required fields.
+    Serializer for the users object fields.
     """
+    name = serializers.CharField(allow_blank=True, max_length=100, required=False)
+    born_date = serializers.DateField(required=False)
+
     class Meta:
         model = User
-        fields = ('id', 'email', 'password')
+        fields = ('id', 'email', 'password', 'name', 'born_date')
         read_only_fields = ('id',)
         extra_kwargs = {'password': {'write_only': True, 'min_length': 5}}
 
@@ -33,15 +36,6 @@ class UserAuthDataSerializer(serializers.ModelSerializer):
             user.set_password(password)
             user.save()
         return user
-
-
-class UserDataSerializer(serializers.ModelSerializer):
-    """
-    Serializert for the users object optional data fields.
-    """
-    class Meta:
-        model = User
-        fields = ('id', 'name', 'born_date')
 
 
 class AuthTokenSerializer(serializers.Serializer):
