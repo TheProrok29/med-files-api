@@ -8,7 +8,6 @@ from rest_framework.test import APITestCase
 CREATE_USER_URL = reverse('api:user-list')
 TOKEN_URL = reverse('user:token')
 ME_URL = reverse('user:me')
-ME_AUTH_URL = reverse('user:auth')
 
 
 def create_user(**params):
@@ -108,16 +107,9 @@ class PrivateUserApiTests(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, {
             'id': self.user.id,
+            'email': self.user.email,
             'name': self.user.name,
             'born_date': self.user.born_date,
-        })
-
-    def test_retrieve_profile_authentication_data_success(self):
-        res = self.client.get(ME_AUTH_URL)
-        self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(res.data, {
-            'id': self.user.id,
-            'email': self.user.email,
         })
         self.assertTrue(self.user.check_password('testpass'))
 
@@ -127,7 +119,7 @@ class PrivateUserApiTests(APITestCase):
 
     def test_update_user_auth_data(self):
         payload = {'email': 'advvfaf@vp.pl', 'password': 'newpassword123'}
-        res = self.client.patch(ME_AUTH_URL, payload)
+        res = self.client.patch(ME_URL, payload)
         self.user.refresh_from_db()
         self.assertEqual(self.user.email, payload['email'])
         self.assertTrue(self.user.check_password(payload['password']))
